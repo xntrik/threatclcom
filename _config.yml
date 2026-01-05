@@ -1,0 +1,15 @@
+title: Threatcl Cloud
+description: Collaborative Threat Modeling as Code. Transform scattered threat models into organizational security intelligence.
+url: https://threatcl.cloud
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+plugins: []
+
+# Exclude from processing
+exclude:
+  - README.md
+  - threatcl_cloud_overview.md
+  - Gemfile
+  - Gemfile.lock

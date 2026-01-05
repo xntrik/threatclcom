@@ -1,0 +1,1487 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threatcl Cloud - Collaborative Threat Modeling as Code</title>
+  <meta name="description" content="Transform scattered threat models into organizational security intelligence. The collaboration layer for threatcl CLI.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #050508;
+      --bg-primary: #0a0a0f;
+      --bg-elevated: #12121a;
+      --bg-surface: #1a1a24;
+      --bg-hover: #22222e;
+
+      --text-primary: #e8e8ed;
+      --text-secondary: #9898a6;
+      --text-muted: #5a5a6a;
+
+      --accent-cyan: #00d4aa;
+      --accent-cyan-dim: #00a888;
+      --accent-cyan-glow: rgba(0, 212, 170, 0.15);
+      --accent-amber: #ffb800;
+      --accent-amber-dim: #cc9400;
+      --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
+
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-medium: rgba(255, 255, 255, 0.1);
+
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Animated background grid */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.08), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--bg-deep);
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text span {
+      color: var(--accent-cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-medium);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--border-medium);
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-cyan-dim);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-cyan-glow);
+    }
+
+    .btn-large {
+      padding: 0.9rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+    }
+
+    .hero-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .hero-stat {
+      text-align: left;
+    }
+
+    .hero-stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    .hero-stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Terminal Demo */
+    .terminal {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-medium);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.5),
+        0 20px 50px -10px rgba(0, 0, 0, 0.5),
+        0 0 100px -20px var(--accent-cyan-glow);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red { background: #ff5f57; }
+    .terminal-dot.yellow { background: #febc2e; }
+    .terminal-dot.green { background: #28c840; }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      min-height: 320px;
+    }
+
+    .terminal-line {
+      opacity: 0;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .terminal-line:nth-child(1) { animation-delay: 0.2s; }
+    .terminal-line:nth-child(2) { animation-delay: 0.4s; }
+    .terminal-line:nth-child(3) { animation-delay: 0.6s; }
+    .terminal-line:nth-child(4) { animation-delay: 0.8s; }
+    .terminal-line:nth-child(5) { animation-delay: 1s; }
+    .terminal-line:nth-child(6) { animation-delay: 1.2s; }
+    .terminal-line:nth-child(7) { animation-delay: 1.4s; }
+    .terminal-line:nth-child(8) { animation-delay: 1.6s; }
+    .terminal-line:nth-child(9) { animation-delay: 1.8s; }
+    .terminal-line:nth-child(10) { animation-delay: 2s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .terminal-prompt {
+      color: var(--accent-cyan);
+    }
+
+    .terminal-command {
+      color: var(--text-primary);
+    }
+
+    .terminal-comment {
+      color: var(--text-muted);
+    }
+
+    .terminal-keyword {
+      color: var(--accent-purple);
+    }
+
+    .terminal-string {
+      color: var(--accent-amber);
+    }
+
+    .terminal-success {
+      color: var(--accent-cyan);
+    }
+
+    /* Section Styles */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* Problem Section */
+    .problems {
+      background: var(--bg-primary);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .problem-card {
+      padding: 1.75rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .problem-card:hover {
+      border-color: var(--accent-red);
+      transform: translateY(-2px);
+    }
+
+    .problem-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .problem-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .problem-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Features Section */
+    .features {
+      background: var(--bg-deep);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      transition: all 0.3s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-elevated));
+    }
+
+    .feature-card.coming-soon {
+      position: relative;
+    }
+
+    .feature-card.coming-soon::after {
+      content: 'Coming Soon';
+      position: absolute;
+      top: 2rem;
+      right: 1rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--accent-amber);
+      color: var(--bg-deep);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(255, 184, 0, 0.3);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-cyan-glow);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .feature-code {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--bg-deep);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      overflow-x: auto;
+    }
+
+    /* How It Works */
+    .how-it-works {
+      background: var(--bg-primary);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--border-subtle), var(--accent-cyan), var(--border-subtle));
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: var(--bg-elevated);
+      border: 2px solid var(--accent-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Pricing Section */
+    .pricing {
+      background: var(--bg-deep);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      padding: 2rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      border-color: var(--border-medium);
+      transform: translateY(-2px);
+    }
+
+    .pricing-card.popular {
+      border-color: var(--accent-cyan);
+      background: linear-gradient(180deg, var(--bg-elevated), var(--bg-primary));
+      position: relative;
+    }
+
+    .pricing-card.popular::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.25rem 0.75rem;
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 100px;
+    }
+
+    .pricing-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-price {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    .pricing-description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--accent-cyan);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .pricing-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background: var(--bg-primary);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      padding: 2rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--bg-deep);
+    }
+
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .testimonial-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* CTA Section */
+    .cta {
+      background: var(--bg-deep);
+      text-align: center;
+      padding: 8rem 2rem;
+    }
+
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .footer-brand {
+      max-width: 280px;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-social a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feature-card.featured {
+        grid-column: span 2;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+      }
+
+      .steps-grid::before {
+        display: none;
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 6rem;
+      }
+
+      .hero-stats {
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card.featured {
+        grid-column: span 1;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-gradient"></div>
+
+  <div class="content-wrapper">
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="#" class="logo">
+          <div class="logo-icon">TC</div>
+          <span class="logo-text">threatcl <span>cloud</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="https://github.com/threatcl/threatcl" target="_blank">CLI Docs</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="#" class="btn btn-ghost">Sign In</a>
+          <a href="#" class="btn btn-primary">Get Started Free</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Now in Public Beta
+          </div>
+
+          <h1 class="hero-title">
+            Threat Modeling<br>
+            <span class="gradient">as Code.</span><br>
+            Now Collaborative.
+          </h1>
+
+          <p class="hero-description">
+            Transform scattered threat models into organizational security intelligence.
+            The collaboration layer for threatcl that enterprises have been waiting for.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary btn-large">Start Free Trial</a>
+            <a href="#" class="btn btn-ghost btn-large">View Documentation</a>
+          </div>
+
+          <!-- <div class="hero-stats"> -->
+          <!--   <div class="hero-stat"> -->
+          <!--     <div class="hero-stat-value">DevOps 1st</div> -->
+          <!--     <div class="hero-stat-label">Designed to work in your pipelines</div> -->
+          <!--   </div> -->
+          <!--   <div class="hero-stat"> -->
+          <!--     <div class="hero-stat-value">&lt;100ms</div> -->
+          <!--     <div class="hero-stat-label">Search Latency</div> -->
+          <!--   </div> -->
+          <!--   <div class="hero-stat"> -->
+          <!--     <div class="hero-stat-value">SOC 2</div> -->
+          <!--     <div class="hero-stat-label">Compliant</div> -->
+          <!--   </div> -->
+          <!-- </div> -->
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">threatcl — zsh</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line">
+              <span class="terminal-comment"># Configure cloud backend</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-prompt">$ </span>
+              <span class="terminal-command">cat threatmodel.hcl</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-keyword">backend</span> <span class="terminal-string">"threatcl-cloud"</span> {
+            </div>
+            <div class="terminal-line">
+              &nbsp;&nbsp;organization = <span class="terminal-string">"acme-corp"</span>
+            </div>
+            <div class="terminal-line">
+              &nbsp;&nbsp;threatmodel &nbsp;&nbsp;&nbsp;= <span class="terminal-string">"payments"</span>
+            </div>
+            <div class="terminal-line">
+              }
+            </div>
+            <div class="terminal-line">&nbsp;</div>
+            <div class="terminal-line">
+              <span class="terminal-prompt">$ </span>
+              <span class="terminal-command">threatcl cloud push</span>
+            </div>
+            <div class="terminal-line">
+              <span class="terminal-success">✓ Cloud version matches local version (v1.0.0)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problems" id="problems">
+      <div class="section-inner">
+        <span class="section-label">The Problem</span>
+        <h2 class="section-title">Threat models shouldn't live in silos</h2>
+        <p class="section-description">
+          Your threat models-as-code are powerful. But scattered across repos, they create
+          blind spots that put your organization at risk.
+        </p>
+
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="problem-icon">🔍</div>
+            <h3 class="problem-title">Zero Discoverability</h3>
+            <p class="problem-text">
+              Your team can't find relevant threat models. Similar services get analyzed
+              repeatedly while others go unprotected.
+            </p>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon">👥</div>
+            <h3 class="problem-title">Collaboration Friction</h3>
+            <p class="problem-text">
+              Non-technical stakeholders can't participate. Legal, compliance, and
+              executives are locked out of the review process.
+            </p>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon">📊</div>
+            <h3 class="problem-title">No Visibility</h3>
+            <p class="problem-text">
+              Security leaders can't easily answer "Which systems have unmitigated high-severity
+              threats?"
+            </p>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon">⚖️</div>
+            <h3 class="problem-title">Governance Gaps</h3>
+            <p class="problem-text">
+              No audit trails, no approval workflows, no policy enforcement.
+              Compliance teams struggle with evidence collection.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="section-inner">
+        <span class="section-label">The Solution</span>
+        <h2 class="section-title">Enterprise-ready. Developer-loved.</h2>
+        <p class="section-description">
+          All the power of threatcl CLI, plus collaboration, governance, and intelligence
+          capabilities that scale across your organization.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-card featured">
+            <div class="feature-icon">🔎</div>
+            <h3 class="feature-title">Central Threat Registry</h3>
+            <p class="feature-text">
+              Every threat model automatically indexed with full-text search. Find all
+              integrity related threats in seconds. Discover related threat
+              models before starting new ones.
+            </p>
+            <div class="feature-code">
+              <span class="terminal-prompt">$ </span>threatcl cloud search -impacts "Integrity"<br>
+              <span class="terminal-success">Found 4 threat(s) over 2 threatmodel(s) in 2 org(s)</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">👁️</div>
+            <h3 class="feature-title">Executive Dashboards</h3>
+            <p class="feature-text">
+              Real-time visibility into threat coverage, risk trends, and control
+              effectiveness across your entire portfolio.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h3 class="feature-title">Approval Workflows</h3>
+            <p class="feature-text">
+              Manage the review status of threat models. Get sign-offs from security,
+              legal, and compliance before production.
+            </p>
+          </div>
+
+          <div class="feature-card coming-soon">
+            <div class="feature-icon">📜</div>
+            <h3 class="feature-title">Policy as Code</h3>
+            <p class="feature-text">
+              Codify security standards. Ensure every internet-facing system has a
+              threat model. Block deployments until high-severity threats have controls.
+            </p>
+          </div>
+
+          <div class="feature-card coming-soon">
+            <div class="feature-icon">🔗</div>
+            <h3 class="feature-title">Integrations</h3>
+            <p class="feature-text">
+              Connect to Snyk, Wiz, JIRA, Slack, and your CI/CD pipeline. Import
+              vulnerabilities, create tickets, and notify teams automatically.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h3 class="feature-title">Audit Logging</h3>
+            <p class="feature-text">
+              Version your threat assessments. Complete history of every change, approval, and access.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="section-inner">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">Your workflow, enhanced</h2>
+        <p class="section-description">
+          Add a backend block to your existing threatcl files.
+          Everything else stays the same.
+        </p>
+
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3 class="step-title">Connect</h3>
+            <p class="step-text">
+              Add the cloud backend to your HCL files. One line of configuration.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3 class="step-title">Sync</h3>
+            <p class="step-text">
+              Run threatcl cloud push. Models sync automatically to the cloud.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3 class="step-title">Collaborate</h3>
+            <p class="step-text">
+              Review in the browser. Comment on threats. Get approvals from stakeholders.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">04</div>
+            <h3 class="step-title">Govern</h3>
+            <p class="step-text">
+              Enforce policies. Track coverage. Report to leadership with real data.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+      <div class="section-inner">
+        <span class="section-label">Pricing</span>
+        <h2 class="section-title">Start free. Scale as you grow.</h2>
+        <p class="section-description">
+          Start with the free tier for individuals, then expand to your teams.
+          Enterprise* features for organizations that need them.
+        </p>
+
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3 class="pricing-name">Free</h3>
+            <div class="pricing-price">$0</div>
+            <p class="pricing-description">For individuals getting started</p>
+            <ul class="pricing-features">
+              <li>5 threat models</li>
+              <li>10 historical versions</li>
+              <li>Web-based viewing</li>
+              <li>Basic dashboards</li>
+              <li>1 API Token</li>
+              <li>Community support</li>
+            </ul>
+            <a href="#" class="btn btn-ghost pricing-btn">Get Started</a>
+          </div>
+
+          <div class="pricing-card popular">
+            <h3 class="pricing-name">Team</h3>
+            <div class="pricing-price">$12<span>/user/mo</span></div>
+            <p class="pricing-description">(Discount for yearly)<br />For growing teams that need collaboration<br />*Minimum of 2 Users</p>
+            <ul class="pricing-features">
+              <li>Up to 100 Users</li>
+              <li>Unlimited threat models</li>
+              <li>90 historical versions</li>
+              <li>Centralized Threat and Control Library</li>
+              <li>5 API Tokens per User</li>
+              <li>Email support</li>
+            </ul>
+            <a href="#" class="btn btn-primary pricing-btn">Start Free Trial</a>
+          </div>
+
+          <div class="pricing-card">
+            <h3 class="pricing-name">Business</h3>
+            <div class="pricing-price">$25<span>/user/mo</span></div>
+            <p class="pricing-description">(Discount for yearly)<br />For enterprises with compliance requirements<br />*Minimum of 5 Users</p>
+            <ul class="pricing-features">
+              <li>Everything in Standard</li>
+              <li>Projects for organization</li>
+              <li>Unlimited versions</li>
+              <li>Unlimited API tokens</li>
+              <li>Policy as Code</li>
+              <li>SSO integration</li>
+              <li>Run Tasks</li>
+              <li>Compliance reporting</li>
+              <li>Self-hosted agents</li>
+              <li>Dedicated support</li>
+            </ul>
+            <a href="#" class="btn btn-ghost pricing-btn">Coming soon</a>
+          </div>
+
+          <!-- <div class="pricing-card"> -->
+          <!--   <h3 class="pricing-name">Enterprise</h3> -->
+          <!--   <div class="pricing-price">Custom</div> -->
+          <!--   <p class="pricing-description">For organizations with advanced needs</p> -->
+          <!--   <ul class="pricing-features"> -->
+          <!--     <li>Self-hosted deployment</li> -->
+          <!--     <li>Air-gapped support</li> -->
+          <!--     <li>Unlimited everything</li> -->
+          <!--     <li>Custom integrations</li> -->
+          <!--     <li>Dedicated CSM</li> -->
+          <!--     <li>Professional services</li> -->
+          <!--     <li>Custom SLA</li> -->
+          <!--   </ul> -->
+          <!--   <a href="#" class="btn btn-ghost pricing-btn">Contact Sales</a> -->
+          <!-- </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+      <div class="section-inner">
+        <span class="section-label">What Teams Say</span>
+        <h2 class="section-title">Trusted by security teams</h2>
+
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <p class="testimonial-text">
+              "Nice words in here"
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JB</div>
+              <div>
+                <div class="testimonial-name">Joe Bloggs</div>
+                <div class="testimonial-role">Head of Security, FinTech Startup</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">
+              "More nice words in here"
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AS</div>
+              <div>
+                <div class="testimonial-name">Alice Secure</div>
+                <div class="testimonial-role">CISO, Enterprise SaaS</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">
+              "Yep, more nice words here - you guessed it"
+            </p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">UD</div>
+              <div>
+                <div class="testimonial-name">Mr Upright</div>
+                <div class="testimonial-role">Principal Security Engineer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="cta-inner">
+        <h2 class="cta-title">Ready to transform your threat modeling program?</h2>
+        <p class="cta-description">
+          Start with the free tier. No credit card required.
+          Be up and running in minutes.
+        </p>
+        <div class="cta-actions">
+          <a href="#" class="btn btn-primary btn-large">Start Free Trial</a>
+          <a href="#" class="btn btn-ghost btn-large">Schedule Demo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="logo">
+              <div class="logo-icon">TC</div>
+              <span class="logo-text">threatcl <span>cloud</span></span>
+            </a>
+            <p>
+              Collaborative threat modeling as code. Transform scattered HCL files
+              into organizational security intelligence.
+            </p>
+          </div>
+
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul class="footer-links">
+              <li><a href="#features">Features</a></li>
+              <li><a href="#pricing">Pricing</a></li>
+              <li><a href="#">Changelog</a></li>
+              <li><a href="#">Roadmap</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul class="footer-links">
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">API Reference</a></li>
+              <li><a href="#">CLI Guide</a></li>
+              <li><a href="#">Blog</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul class="footer-links">
+              <li><a href="#">About</a></li>
+              <li><a href="#">Security</a></li>
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2025 Threatcl Cloud. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="https://github.com/threatcl/threatcl" target="_blank">GitHub</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
