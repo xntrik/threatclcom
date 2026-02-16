@@ -9,6 +9,8 @@ layout: null
   <title>Threatcl Cloud - Collaborative Threat Modeling as Code</title>
   <meta name="description" content="Transform scattered threat models into organizational security intelligence. The collaboration layer for threatcl CLI.">
 
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -100,11 +102,12 @@ layout: null
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 1rem 2rem;
+      padding: 0.5rem 2rem;
       background: rgba(5, 5, 8, 0.8);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-subtle);
       transition: all 0.3s ease;
+      overflow: visible;
     }
 
     .nav-inner {
@@ -118,7 +121,7 @@ layout: null
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0;
       text-decoration: none;
       color: var(--text-primary);
     }
@@ -145,6 +148,17 @@ layout: null
 
     .logo-text span {
       color: var(--accent-cyan);
+    }
+
+    .logo-mark {
+      height: 65px;
+      width: auto;
+    }
+
+    .logo-wordmark {
+      height: 30px;
+      width: auto;
+      margin-left: 1.25rem;
     }
 
     .nav-links {
@@ -578,6 +592,19 @@ layout: null
       line-height: 1.6;
     }
 
+    .feature-available-marker {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .feature-available-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
     .feature-code {
       margin-top: 1.5rem;
       padding: 1rem;
@@ -860,6 +887,11 @@ layout: null
       margin-bottom: 1rem;
     }
 
+    .footer-logo-img {
+      height: 48px;
+      width: auto;
+    }
+
     .footer-brand p {
       font-size: 0.9rem;
       color: var(--text-secondary);
@@ -1016,20 +1048,20 @@ layout: null
     <nav class="nav">
       <div class="nav-inner">
         <a href="#" class="logo">
-          <div class="logo-icon">TC</div>
-          <span class="logo-text">threatcl <span>cloud</span></span>
+          <img src="/assets/images/shaded_gradient_threatcl2.svg" alt="threatcl cloud" class="logo-mark">
+          <img src="/assets/images/full_colour_wordmark3.svg" alt="threatcl cloud" class="logo-wordmark">
         </a>
 
         <ul class="nav-links">
           <li><a href="#features">Features</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="https://github.com/threatcl/threatcl" target="_blank">CLI Docs</a></li>
+          <li><a href="https://threatcl.github.io/cloud/overview/" target="_blank">CLI Docs</a></li>
         </ul>
 
         <div class="nav-cta">
-          <a href="#" class="btn btn-ghost">Sign In</a>
-          <a href="#" class="btn btn-primary">Get Started Free</a>
+          <!-- <a href="#" class="btn btn-ghost">Sign In</a> -->
+          <a href="/beta" class="btn btn-primary">Get Started Free</a>
         </div>
       </div>
     </nav>
@@ -1040,7 +1072,7 @@ layout: null
         <div class="hero-content">
           <div class="hero-badge">
             <span class="hero-badge-dot"></span>
-            Now in Public Beta
+            Beta launching!
           </div>
 
           <h1 class="hero-title">
@@ -1055,8 +1087,8 @@ layout: null
           </p>
 
           <div class="hero-actions">
-            <a href="#" class="btn btn-primary btn-large">Start Free Trial</a>
-            <a href="#" class="btn btn-ghost btn-large">View Documentation</a>
+            <a href="/beta" class="btn btn-primary btn-large">Check out the Beta</a>
+            <a href="https://threatcl.github.io/cloud/overview/" target="_blank" class="btn btn-ghost btn-large">View Documentation</a>
           </div>
 
           <!-- <div class="hero-stats"> -->
@@ -1221,9 +1253,10 @@ layout: null
             <div class="feature-icon">🔗</div>
             <h3 class="feature-title">Integrations</h3>
             <p class="feature-text">
-              Connect to Snyk, Wiz, JIRA, Slack, and your CI/CD pipeline. Import
+              Connect to JIRA, Slack<span class="feature-available-marker">*</span>, your CI/CD pipeline<span class="feature-available-marker">*</span> and more. Import
               vulnerabilities, create tickets, and notify teams automatically.
             </p>
+            <p class="feature-available-note">* Available now</p>
           </div>
 
           <div class="feature-card">
@@ -1306,13 +1339,15 @@ layout: null
               <li>1 API Token</li>
               <li>Community support</li>
             </ul>
-            <a href="#" class="btn btn-ghost pricing-btn">Get Started</a>
+            <a href="/beta" class="btn btn-ghost pricing-btn">Get Started</a>
           </div>
 
-          <div class="pricing-card popular">
+          <!-- <div class="pricing-card popular"> -->
+          <div class="pricing-card">
             <h3 class="pricing-name">Team</h3>
-            <div class="pricing-price">$12<span>/user/mo</span></div>
-            <p class="pricing-description">(Discount for yearly)<br />For growing teams that need collaboration<br />*Minimum of 2 Users</p>
+            <!-- <div class="pricing-price">$tbc<span>/user/mo</span></div> -->
+            <!-- <p class="pricing-description">(Discount for yearly)<br />For growing teams that need collaboration<br />*Minimum of 2 Users</p> -->
+            <p class="pricing-description">For growing teams that need collaboration</p>
             <ul class="pricing-features">
               <li>Up to 100 Users</li>
               <li>Unlimited threat models</li>
@@ -1321,15 +1356,15 @@ layout: null
               <li>5 API Tokens per User</li>
               <li>Email support</li>
             </ul>
-            <a href="#" class="btn btn-primary pricing-btn">Start Free Trial</a>
+            <a href="https://discord.gg/MN8eJwjtpf" class="btn btn-primary pricing-btn">Visit the #beta chan</a>
           </div>
 
           <div class="pricing-card">
             <h3 class="pricing-name">Business</h3>
-            <div class="pricing-price">$25<span>/user/mo</span></div>
-            <p class="pricing-description">(Discount for yearly)<br />For enterprises with compliance requirements<br />*Minimum of 5 Users</p>
+            <!-- <div class="pricing-price">$tbc<span>/user/mo</span></div> -->
+            <!-- <p class="pricing-description">(Discount for yearly)<br />For enterprises with compliance requirements<br />*Minimum of 5 Users</p> -->
             <ul class="pricing-features">
-              <li>Everything in Standard</li>
+              <li>Everything in Team</li>
               <li>Projects for organization</li>
               <li>Unlimited versions</li>
               <li>Unlimited API tokens</li>
@@ -1363,53 +1398,53 @@ layout: null
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-      <div class="section-inner">
-        <span class="section-label">What Teams Say</span>
-        <h2 class="section-title">Trusted by security teams</h2>
-
-        <div class="testimonial-grid">
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "Nice words in here"
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">JB</div>
-              <div>
-                <div class="testimonial-name">Joe Bloggs</div>
-                <div class="testimonial-role">Head of Security, FinTech Startup</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "More nice words in here"
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">AS</div>
-              <div>
-                <div class="testimonial-name">Alice Secure</div>
-                <div class="testimonial-role">CISO, Enterprise SaaS</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">
-              "Yep, more nice words here - you guessed it"
-            </p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">UD</div>
-              <div>
-                <div class="testimonial-name">Mr Upright</div>
-                <div class="testimonial-role">Principal Security Engineer</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- <section class="testimonials" id="testimonials"> -->
+    <!--   <div class="section-inner"> -->
+    <!--     <span class="section-label">What Teams Say</span> -->
+    <!--     <h2 class="section-title">Trusted by security teams</h2> -->
+    <!---->
+    <!--     <div class="testimonial-grid"> -->
+    <!--       <div class="testimonial-card"> -->
+    <!--         <p class="testimonial-text"> -->
+    <!--           "Nice words in here" -->
+    <!--         </p> -->
+    <!--         <div class="testimonial-author"> -->
+    <!--           <div class="testimonial-avatar">JB</div> -->
+    <!--           <div> -->
+    <!--             <div class="testimonial-name">Joe Bloggs</div> -->
+    <!--             <div class="testimonial-role">Head of Security, FinTech Startup</div> -->
+    <!--           </div> -->
+    <!--         </div> -->
+    <!--       </div> -->
+    <!---->
+    <!--       <div class="testimonial-card"> -->
+    <!--         <p class="testimonial-text"> -->
+    <!--           "More nice words in here" -->
+    <!--         </p> -->
+    <!--         <div class="testimonial-author"> -->
+    <!--           <div class="testimonial-avatar">AS</div> -->
+    <!--           <div> -->
+    <!--             <div class="testimonial-name">Alice Secure</div> -->
+    <!--             <div class="testimonial-role">CISO, Enterprise SaaS</div> -->
+    <!--           </div> -->
+    <!--         </div> -->
+    <!--       </div> -->
+    <!---->
+    <!--       <div class="testimonial-card"> -->
+    <!--         <p class="testimonial-text"> -->
+    <!--           "Yep, more nice words here - you guessed it" -->
+    <!--         </p> -->
+    <!--         <div class="testimonial-author"> -->
+    <!--           <div class="testimonial-avatar">UD</div> -->
+    <!--           <div> -->
+    <!--             <div class="testimonial-name">Mr Upright</div> -->
+    <!--             <div class="testimonial-role">Principal Security Engineer</div> -->
+    <!--           </div> -->
+    <!--         </div> -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--   </div> -->
+    <!-- </section> -->
 
     <!-- CTA Section -->
     <section class="cta">
@@ -1420,8 +1455,8 @@ layout: null
           Be up and running in minutes.
         </p>
         <div class="cta-actions">
-          <a href="#" class="btn btn-primary btn-large">Start Free Trial</a>
-          <a href="#" class="btn btn-ghost btn-large">Schedule Demo</a>
+          <a href="/beta" class="btn btn-primary btn-large">Get Started Free</a>
+          <a href="https://discord.gg/MN8eJwjtpf" target="_blank" class="btn btn-ghost btn-large">Join our Community</a>
         </div>
       </div>
     </section>
@@ -1432,8 +1467,7 @@ layout: null
         <div class="footer-grid">
           <div class="footer-brand">
             <a href="#" class="logo">
-              <div class="logo-icon">TC</div>
-              <span class="logo-text">threatcl <span>cloud</span></span>
+              <img src="/assets/images/full_colour_unshaded_lockup.svg" alt="threatcl cloud" class="footer-logo-img">
             </a>
             <p>
               Collaborative threat modeling as code. Transform scattered HCL files
@@ -1446,38 +1480,33 @@ layout: null
             <ul class="footer-links">
               <li><a href="#features">Features</a></li>
               <li><a href="#pricing">Pricing</a></li>
-              <li><a href="#">Changelog</a></li>
-              <li><a href="#">Roadmap</a></li>
+              <!-- <li><a href="#">Changelog</a></li> -->
+              <!-- <li><a href="#">Roadmap</a></li> -->
             </ul>
           </div>
 
           <div class="footer-column">
             <h4>Resources</h4>
             <ul class="footer-links">
-              <li><a href="#">Documentation</a></li>
-              <li><a href="#">API Reference</a></li>
-              <li><a href="#">CLI Guide</a></li>
-              <li><a href="#">Blog</a></li>
+              <li><a href="https://threatcl.github.io/cloud/overview/">Documentation</a></li>
             </ul>
           </div>
 
-          <div class="footer-column">
-            <h4>Company</h4>
-            <ul class="footer-links">
-              <li><a href="#">About</a></li>
-              <li><a href="#">Security</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms</a></li>
-            </ul>
-          </div>
+          <!-- <div class="footer-column"> -->
+          <!--   <h4>Company</h4> -->
+          <!--   <ul class="footer-links"> -->
+          <!--     <li><a href="/company/security">Security</a></li> -->
+          <!--     <li><a href="#">Privacy</a></li> -->
+          <!--     <li><a href="#">Terms</a></li> -->
+          <!--   </ul> -->
+          <!-- </div> -->
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2025 Threatcl Cloud. All rights reserved.</p>
+          <p>&copy; 2026 Threatcl Cloud. All rights reserved.</p>
           <div class="footer-social">
             <a href="https://github.com/threatcl/threatcl" target="_blank">GitHub</a>
-            <a href="#">Twitter</a>
-            <a href="#">LinkedIn</a>
+            <a href="https://discord.gg/MN8eJwjtpf" target="_blank">Discord</a>
           </div>
         </div>
       </div>
