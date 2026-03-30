@@ -297,6 +297,18 @@ layout: null
       line-height: 1.7;
     }
 
+    .hero-description a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent-cyan-dim);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .hero-description a:hover {
+      color: var(--accent-cyan);
+      border-bottom-color: var(--accent-cyan);
+    }
+
     .hero-actions {
       display: flex;
       gap: 1rem;
