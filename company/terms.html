@@ -1,0 +1,685 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms &amp; Conditions - Threatcl Cloud</title>
+  <meta name="description" content="Threatcl Cloud's Terms &amp; Conditions — the agreement governing your use of our website and services.">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #050508;
+      --bg-primary: #0a0a0f;
+      --bg-elevated: #12121a;
+      --bg-surface: #1a1a24;
+      --bg-hover: #22222e;
+
+      --text-primary: #e8e8ed;
+      --text-secondary: #9898a6;
+      --text-muted: #5a5a6a;
+
+      --accent-cyan: #00d4aa;
+      --accent-cyan-dim: #00a888;
+      --accent-cyan-glow: rgba(0, 212, 170, 0.15);
+      --accent-amber: #ffb800;
+      --accent-amber-dim: #cc9400;
+      --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
+
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-medium: rgba(255, 255, 255, 0.1);
+
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.08), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.5rem 2rem;
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+      overflow: visible;
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-mark {
+      height: 65px;
+      width: auto;
+    }
+
+    .logo-wordmark {
+      height: 30px;
+      width: auto;
+      margin-left: 1.25rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-cyan-dim);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-cyan-glow);
+    }
+
+    /* Page Header */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 .gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Content */
+    .page-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+    }
+
+    .page-content section {
+      margin-bottom: 3rem;
+    }
+
+    .page-content h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: var(--accent-cyan);
+    }
+
+    .page-content p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .page-content ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    .page-content ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .page-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+    }
+
+    .page-content a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .page-content a:hover {
+      color: var(--accent-cyan-dim);
+    }
+
+    .last-updated {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      margin-top: 4rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .footer-brand {
+      max-width: 280px;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo-img {
+      height: 48px;
+      width: auto;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-social a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-gradient"></div>
+
+  <div class="content-wrapper">
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="/" class="logo">
+          <img src="/assets/images/shaded_gradient_threatcl2.svg" alt="threatcl cloud" class="logo-mark">
+          <img src="/assets/images/full_colour_wordmark3.svg" alt="threatcl cloud" class="logo-wordmark">
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="https://threatcl.dev/cloud/overview/" target="_blank">CLI Docs</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="/beta" class="btn btn-primary">Get Started Free</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <h1><span class="gradient">Terms &amp; Conditions</span></h1>
+      <p>The agreement governing your use of our website and services.</p>
+    </header>
+
+    <div class="page-content">
+
+      <section>
+        <h2>General Terms</h2>
+        <p>By accessing and placing an order with Threatcl Cloud, you confirm that you are in agreement with and bound by the terms of service contained in the Terms &amp; Conditions outlined below. These terms apply to the entire website and any email or other type of communication between you and Threatcl Cloud.</p>
+        <p>Under no circumstances shall Threatcl Cloud be liable for any direct, indirect, special, incidental or consequential damages, including, but not limited to, loss of data or profit, arising out of the use, or the inability to use, the materials on this site, even if Threatcl Cloud or an authorized representative has been advised of the possibility of such damages.</p>
+        <p>Threatcl Cloud will not be responsible for any outcome that may occur during the course of usage of our resources. We reserve the rights to change prices and revise the resources usage policy in any moment.</p>
+      </section>
+
+      <section>
+        <h2>License</h2>
+        <p>Threatcl Cloud grants you a revocable, non-exclusive, non-transferable, limited license to interact with the website and associated Threatcl Cloud Services, strictly in accordance with the terms of this Agreement.</p>
+        <p>These Terms &amp; Conditions are a contract between you and Threatcl Cloud, the provider of the Threatcl Cloud website and the services accessible from it (collectively referred to as the "Threatcl Cloud Service").</p>
+        <p>You are agreeing to be bound by these Terms &amp; Conditions. If you do not agree, please do not use the Threatcl Cloud Service. If you violate any of these Terms &amp; Conditions, we reserve the right to cancel your account or block access to your account without notice.</p>
+      </section>
+
+      <section>
+        <h2>Definitions</h2>
+        <ul>
+          <li><strong>Cookie:</strong> a small amount of data generated by a website and saved by your web browser, used to identify your browser, provide analytics, and remember information about you.</li>
+          <li><strong>Company:</strong> when this policy mentions "Company," "we," "us," or "our," it refers to Threatcl Cloud Pty Ltd.</li>
+          <li><strong>Country:</strong> where Threatcl Cloud or its owners/founders are based — Australia.</li>
+          <li><strong>Device:</strong> any internet-connected device such as a phone, tablet, or computer that can be used to visit Threatcl Cloud and use the services.</li>
+          <li><strong>Service:</strong> the service provided by Threatcl Cloud as described on this platform.</li>
+          <li><strong>Third-party service:</strong> advertisers, promotional and marketing partners, and others who provide our content or whose products or services we think may interest you.</li>
+          <li><strong>Website:</strong> Threatcl Cloud's site, accessible at <a href="https://threatcl.com">https://threatcl.com</a>.</li>
+          <li><strong>You:</strong> a person or entity registered with Threatcl Cloud to use the Services.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Restrictions</h2>
+        <p>You agree not to, and you will not permit others to:</p>
+        <ul>
+          <li>License, sell, rent, lease, assign, distribute, transmit, host, outsource, disclose, or otherwise commercially exploit the website or make the platform available to any third party.</li>
+          <li>Modify, make derivative works of, disassemble, decrypt, reverse compile, or reverse engineer any part of the website.</li>
+          <li>Remove, alter, or obscure any proprietary notice (including any notice of copyright or trademark) of Threatcl Cloud or its affiliates, partners, suppliers, or licensors.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Refund Policy</h2>
+        <p>By placing an order or making a purchase at Threatcl Cloud, you agree to these terms along with Threatcl Cloud's Privacy Policy.</p>
+        <p>If, for any reason, you are not completely satisfied with any good or service that we provide, don't hesitate to contact us and we will discuss any of the issues you are going through with our product.</p>
+      </section>
+
+      <section>
+        <h2>Your Suggestions</h2>
+        <p>Any feedback, comments, ideas, improvements, or suggestions (collectively, "Suggestions") provided by you to Threatcl Cloud with respect to the website shall remain the sole and exclusive property of Threatcl Cloud.</p>
+        <p>Threatcl Cloud shall be free to use, copy, modify, publish, or redistribute the Suggestions for any purpose and in any way without any credit or compensation to you.</p>
+      </section>
+
+      <section>
+        <h2>Your Consent</h2>
+        <p>We've updated our Terms &amp; Conditions to provide you with complete transparency into what is being set when you visit our site and how it's being used. By using our website, registering an account, or making a purchase, you hereby consent to our Terms &amp; Conditions.</p>
+      </section>
+
+      <section>
+        <h2>Links to Other Websites</h2>
+        <p>These Terms &amp; Conditions apply only to the Services. The Services may contain links to other websites not operated or controlled by Threatcl Cloud. We are not responsible for the content, accuracy, or opinions expressed in such websites, and such websites are not investigated, monitored, or checked for accuracy or completeness by us.</p>
+        <p>When you use a link to go from the Services to another website, our Terms &amp; Conditions are no longer in effect. Your browsing and interaction on any other website is subject to that website's own rules and policies.</p>
+      </section>
+
+      <section>
+        <h2>Cookies</h2>
+        <p>Threatcl Cloud uses "Cookies" to identify the areas of our website that you have visited. A Cookie is a small piece of data stored on your computer or mobile device by your web browser. We use Cookies to enhance the performance and functionality of our website but they are non-essential to their use. Without these cookies, certain functionality may become unavailable or you would be required to enter your login details every time you visit the website.</p>
+        <p>Most web browsers can be set to disable the use of Cookies. However, if you disable Cookies, you may not be able to access functionality on our website correctly or at all. We never place Personally Identifiable Information in Cookies.</p>
+      </section>
+
+      <section>
+        <h2>Changes to Our Terms &amp; Conditions</h2>
+        <p>You acknowledge and agree that Threatcl Cloud may stop (permanently or temporarily) providing the Service to you or to users generally at Threatcl Cloud's sole discretion, without prior notice to you. You may stop using the Service at any time.</p>
+        <p>If we decide to change our Terms &amp; Conditions, we will post those changes on this page and/or update the modification date below.</p>
+      </section>
+
+      <section>
+        <h2>Modifications and Updates to Our Website</h2>
+        <p>Threatcl Cloud reserves the right to modify, suspend, or discontinue, temporarily or permanently, the website or any service to which it connects, with or without notice and without liability to you.</p>
+        <p>Threatcl Cloud may from time to time provide enhancements or improvements to the features and functionality of the website, which may include patches, bug fixes, updates, upgrades, and other modifications. You agree that all updates will be deemed to constitute an integral part of the website and subject to the terms and conditions of this Agreement.</p>
+      </section>
+
+      <section>
+        <h2>Third-Party Services</h2>
+        <p>We may display, include, or make available third-party content or provide links to third-party websites or services ("Third-Party Services").</p>
+        <p>You acknowledge and agree that Threatcl Cloud shall not be responsible for any Third-Party Services, including their accuracy, completeness, timeliness, validity, copyright compliance, legality, decency, quality, or any other aspect thereof. Third-Party Services and links thereto are provided solely as a convenience to you and you access and use them entirely at your own risk.</p>
+      </section>
+
+      <section>
+        <h2>Term and Termination</h2>
+        <p>This Agreement shall remain in effect until terminated by you or Threatcl Cloud. Threatcl Cloud may, in its sole discretion, at any time and for any or no reason, suspend or terminate this Agreement with or without prior notice.</p>
+        <p>This Agreement will terminate immediately, without prior notice, in the event that you fail to comply with any provision of this Agreement. Upon termination, you shall cease all use of the website.</p>
+        <p>Termination of this Agreement will not limit any of Threatcl Cloud's rights or remedies at law or in equity in case of breach by you of any of your obligations under this Agreement.</p>
+      </section>
+
+      <section>
+        <h2>Copyright Infringement Notice</h2>
+        <p>If you are a copyright owner or such owner's agent and believe any material on our website constitutes an infringement on your copyright, please contact us at <a href="mailto:support@threatcl.com">support@threatcl.com</a> with the following information:</p>
+        <ul>
+          <li>A physical or electronic signature of the copyright owner or an authorized person</li>
+          <li>Identification of the material that is claimed to be infringing</li>
+          <li>Your contact information, including your address, telephone number, and an email</li>
+          <li>A statement that you have a good faith belief that use of the material is not authorized by the copyright owner</li>
+          <li>A statement that the information in the notification is accurate and, under penalty of perjury, you are authorized to act on behalf of the owner</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Indemnification</h2>
+        <p>You agree to indemnify and hold Threatcl Cloud and its parents, subsidiaries, affiliates, officers, employees, agents, partners, and licensors harmless from any claim or demand, including reasonable attorneys' fees, due to or arising out of your: (a) use of the website; (b) violation of this Agreement or any law or regulation; or (c) violation of any right of a third party.</p>
+      </section>
+
+      <section>
+        <h2>No Warranties</h2>
+        <p>The website is provided to you "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, Threatcl Cloud expressly disclaims all warranties, whether express, implied, statutory, or otherwise, with respect to the website, including all implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement.</p>
+        <p>Neither Threatcl Cloud nor any of its providers makes any representation or warranty that the website will be uninterrupted or error-free, or that the website, its servers, or e-mails sent on behalf of Threatcl Cloud are free of viruses, scripts, trojan horses, worms, malware, or other harmful components.</p>
+      </section>
+
+      <section>
+        <h2>Limitation of Liability</h2>
+        <p>Notwithstanding any damages that you might incur, the entire liability of Threatcl Cloud and any of its suppliers under any provision of this Agreement shall be limited to the amount actually paid by you for the website.</p>
+        <p>To the maximum extent permitted by applicable law, in no event shall Threatcl Cloud or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever, including damages for loss of profits, loss of data or other information, business interruption, personal injury, or loss of privacy arising out of or in any way related to the use of or inability to use the website.</p>
+      </section>
+
+      <section>
+        <h2>Severability</h2>
+        <p>If any provision of this Agreement is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.</p>
+        <p>This Agreement, together with the Privacy Policy and any other legal notices published by Threatcl Cloud on the Services, shall constitute the entire agreement between you and Threatcl Cloud concerning the Services.</p>
+      </section>
+
+      <section>
+        <h2>Waiver</h2>
+        <p>Except as provided herein, the failure to exercise a right or to require performance of an obligation under this Agreement shall not affect a party's ability to exercise such right or require such performance at any time thereafter.</p>
+        <p>No failure to exercise, and no delay in exercising, on the part of either party, any right or power under this Agreement shall operate as a waiver of that right or power. In the event of a conflict between this Agreement and any applicable purchase or other terms, the terms of this Agreement shall govern.</p>
+      </section>
+
+      <section>
+        <h2>Amendments to this Agreement</h2>
+        <p>Threatcl Cloud reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+        <p>By continuing to access or use our website after any revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, you are no longer authorized to use Threatcl Cloud.</p>
+      </section>
+
+      <section>
+        <h2>Intellectual Property</h2>
+        <p>The website and its entire contents, features, and functionality (including but not limited to all information, software, text, displays, images, video, and audio, and the design, selection, and arrangement thereof) are owned by Threatcl Cloud, its licensors, or other providers of such material and are protected by Australia and international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
+        <p>The material may not be copied, modified, reproduced, downloaded, or distributed in any way, in whole or in part, without the express prior written permission of Threatcl Cloud. Any unauthorized use of the material is prohibited.</p>
+      </section>
+
+      <section>
+        <h2>Agreement to Arbitrate</h2>
+        <p>In the event of a dispute, you or Threatcl Cloud must give the other a written Notice of Dispute setting forth the name, address, and contact information of the party giving it, the facts giving rise to the dispute, and the relief requested. Please send any Notice of Dispute via email to: <a href="mailto:support@threatcl.com">support@threatcl.com</a>.</p>
+        <p>You and Threatcl Cloud will attempt to resolve any dispute through informal negotiation within sixty (60) days from the date the Notice of Dispute is sent. After sixty (60) days, you or Threatcl Cloud may commence arbitration. The dispute shall be settled by binding arbitration in accordance with the commercial arbitration rules of the American Arbitration Association.</p>
+      </section>
+
+      <section>
+        <h2>Submissions and Privacy</h2>
+        <p>In the event that you submit or post any ideas, creative suggestions, designs, photographs, information, advertisements, data, or proposals, including ideas for new or improved products, services, features, technologies, or promotions, you expressly agree that such submissions will automatically be treated as non-confidential and non-proprietary and will become the sole property of Threatcl Cloud without any compensation or credit to you whatsoever.</p>
+      </section>
+
+      <section>
+        <h2>Promotions</h2>
+        <p>Threatcl Cloud may, from time to time, include contests, promotions, sweepstakes, or other activities ("Promotions") that require you to submit material or information concerning yourself. Please note that all Promotions may be governed by separate rules that may contain certain eligibility requirements, such as restrictions as to age and geographic location. You are responsible for reading all Promotions rules to determine whether or not you are eligible to participate.</p>
+      </section>
+
+      <section>
+        <h2>Typographical Errors</h2>
+        <p>In the event a product and/or service is listed at an incorrect price or with incorrect information due to typographical error, we shall have the right to refuse or cancel any orders placed for the product and/or service listed at the incorrect price. If your credit card has already been charged for the purchase and your order is canceled, we shall immediately issue a credit to your credit card account in the amount of the charge.</p>
+      </section>
+
+      <section>
+        <h2>Disclaimer</h2>
+        <p>Threatcl Cloud is not responsible for any content, code, or any other imprecision. Threatcl Cloud does not provide warranties or guarantees.</p>
+        <p>In no event shall Threatcl Cloud be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service.</p>
+        <p>The Threatcl Cloud Service and its contents are provided "as is" and "as available" without any warranty or representations of any kind, whether express or implied. Without limiting the foregoing, Threatcl Cloud specifically disclaims all warranties of merchantability, fitness for a particular purpose, or non-infringement of third-party rights.</p>
+      </section>
+
+      <section>
+        <h2>Miscellaneous</h2>
+        <p>Threatcl Cloud operates and controls the Threatcl Cloud Service from its offices in Australia. The Service is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation.</p>
+        <p>These Terms &amp; Conditions (which include and incorporate the Threatcl Cloud Privacy Policy) contains the entire understanding between you and Threatcl Cloud concerning its subject matter, and supersedes all prior understandings.</p>
+      </section>
+
+      <section>
+        <h2>Contact Us</h2>
+        <p>Don't hesitate to contact us if you have any questions about these Terms &amp; Conditions.</p>
+        <ul>
+          <li>Via Email: <a href="mailto:support@threatcl.com">support@threatcl.com</a></li>
+        </ul>
+      </section>
+
+      <p class="last-updated">Last updated: April 2026</p>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="logo">
+              <img src="/assets/images/full_colour_unshaded_lockup.svg" alt="threatcl cloud" class="footer-logo-img">
+            </a>
+            <p>
+              Collaborative threat modeling as code. Transform scattered HCL files
+              into organizational security intelligence.
+            </p>
+          </div>
+
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul class="footer-links">
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#pricing">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul class="footer-links">
+              <li><a href="https://threatcl.dev/cloud/overview/">Documentation</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul class="footer-links">
+              <li><a href="/company/security">Security</a></li>
+              <li><a href="/company/privacy">Privacy</a></li>
+              <li><a href="/company/terms">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 Threatcl Cloud. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="https://github.com/threatcl/threatcl" target="_blank">GitHub</a>
+            <a href="https://discord.gg/MN8eJwjtpf" target="_blank">Discord</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

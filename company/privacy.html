@@ -1,0 +1,649 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - Threatcl Cloud</title>
+  <meta name="description" content="Threatcl Cloud's Privacy Policy — how we collect, use, and protect your personal information.">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #050508;
+      --bg-primary: #0a0a0f;
+      --bg-elevated: #12121a;
+      --bg-surface: #1a1a24;
+      --bg-hover: #22222e;
+
+      --text-primary: #e8e8ed;
+      --text-secondary: #9898a6;
+      --text-muted: #5a5a6a;
+
+      --accent-cyan: #00d4aa;
+      --accent-cyan-dim: #00a888;
+      --accent-cyan-glow: rgba(0, 212, 170, 0.15);
+      --accent-amber: #ffb800;
+      --accent-amber-dim: #cc9400;
+      --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
+
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-medium: rgba(255, 255, 255, 0.1);
+
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.08), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.5rem 2rem;
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+      overflow: visible;
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-mark {
+      height: 65px;
+      width: auto;
+    }
+
+    .logo-wordmark {
+      height: 30px;
+      width: auto;
+      margin-left: 1.25rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-cyan-dim);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-cyan-glow);
+    }
+
+    /* Page Header */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 .gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Content */
+    .page-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+    }
+
+    .page-content section {
+      margin-bottom: 3rem;
+    }
+
+    .page-content h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: var(--accent-cyan);
+    }
+
+    .page-content p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .page-content ul {
+      list-style: none;
+      margin-bottom: 1rem;
+    }
+
+    .page-content ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .page-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+    }
+
+    .page-content a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .page-content a:hover {
+      color: var(--accent-cyan-dim);
+    }
+
+    .last-updated {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      margin-top: 4rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .footer-brand {
+      max-width: 280px;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo-img {
+      height: 48px;
+      width: auto;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-social a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-gradient"></div>
+
+  <div class="content-wrapper">
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="/" class="logo">
+          <img src="/assets/images/shaded_gradient_threatcl2.svg" alt="threatcl cloud" class="logo-mark">
+          <img src="/assets/images/full_colour_wordmark3.svg" alt="threatcl cloud" class="logo-wordmark">
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="https://threatcl.dev/cloud/overview/" target="_blank">CLI Docs</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="/beta" class="btn btn-primary">Get Started Free</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <h1><span class="gradient">Privacy Policy</span></h1>
+      <p>How we collect, use, and protect your personal information.</p>
+    </header>
+
+    <div class="page-content">
+
+      <section>
+        <p>Threatcl Cloud ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how your personal information is collected, used, and disclosed by Threatcl Cloud.</p>
+        <p>This Privacy Policy applies to our website and its associated subdomains (collectively, our "Service") alongside our application, Threatcl Cloud. By accessing or using our Service, you signify that you have read, understood, and agree to our collection, storage, use, and disclosure of your personal information as described in this Privacy Policy and our Terms of Service.</p>
+      </section>
+
+      <section>
+        <h2>Definitions and Key Terms</h2>
+        <ul>
+          <li><strong>Cookie:</strong> a small amount of data generated by a website and saved by your web browser. It is used to identify your browser, provide analytics, and remember information about you such as your language preference or login information.</li>
+          <li><strong>Company:</strong> when this policy mentions "Company," "we," "us," or "our," it refers to Threatcl Cloud Pty Ltd, responsible for your information under this Privacy Policy.</li>
+          <li><strong>Country:</strong> where Threatcl Cloud or the owners/founders of Threatcl Cloud are based — in this case, Australia.</li>
+          <li><strong>Customer:</strong> a company, organization, or person that signs up to use the Threatcl Cloud Service.</li>
+          <li><strong>Device:</strong> any internet-connected device such as a phone, tablet, or computer that can be used to visit Threatcl Cloud and use the services.</li>
+          <li><strong>IP address:</strong> a number assigned to every device connected to the Internet, often used to identify the location from which a device is connecting.</li>
+          <li><strong>Personnel:</strong> individuals who are employed by Threatcl Cloud or are under contract to perform a service on behalf of one of the parties.</li>
+          <li><strong>Personal Data:</strong> any information that directly, indirectly, or in connection with other information allows for the identification of a natural person.</li>
+          <li><strong>Service:</strong> the service provided by Threatcl Cloud as described on this platform.</li>
+          <li><strong>Third-party service:</strong> advertisers, promotional and marketing partners, and others who provide our content or whose products or services we think may interest you.</li>
+          <li><strong>Website:</strong> Threatcl Cloud's site, accessible at <a href="https://threatcl.com">https://threatcl.com</a>.</li>
+          <li><strong>You:</strong> a person or entity registered with Threatcl Cloud to use the Services.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What Information Do We Collect?</h2>
+        <p>We collect information from you when you register on our site, place an order, subscribe to our newsletter, respond to a survey, or fill out a form. This includes:</p>
+        <ul>
+          <li>Name / Username</li>
+          <li>Email Addresses</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How Do We Use The Information We Collect?</h2>
+        <p>Any of the information we collect from you may be used in one of the following ways:</p>
+        <ul>
+          <li>To personalize your experience and better respond to your individual needs</li>
+          <li>To improve our website based on the information and feedback we receive from you</li>
+          <li>To improve customer service and more effectively respond to support requests</li>
+          <li>To process transactions</li>
+          <li>To administer a contest, promotion, survey, or other site feature</li>
+          <li>To send periodic emails</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>When Do We Use Third-Party Information?</h2>
+        <p>Threatcl Cloud will collect End User Data necessary to provide the Threatcl Cloud services to our customers.</p>
+        <p>We receive some information from third parties when you contact us. For example, when you submit your email address to show interest in becoming a Threatcl Cloud customer, we may receive information from a third party that provides automated fraud detection services.</p>
+      </section>
+
+      <section>
+        <h2>Do We Share Information With Third Parties?</h2>
+        <p>We may share information with our current and future affiliated companies and business partners. If we are involved in a merger, asset sale, or other business reorganization, we may also share or transfer your personal and non-personal information to our successors-in-interest.</p>
+        <p>We may engage trusted third-party service providers to perform functions such as hosting and maintaining our servers, database storage and management, e-mail management, marketing, and payment processing. We will likely share your personal information with these third parties to enable them to perform these services for us and for you.</p>
+        <p>We may also disclose personal and non-personal information about you to government or law enforcement officials or private parties as we, in our sole discretion, believe necessary or appropriate in order to respond to claims, legal process (including subpoenas), to protect our rights and interests, or to comply with applicable laws, rules, and regulations.</p>
+      </section>
+
+      <section>
+        <h2>How Do We Use Your Email Address?</h2>
+        <p>By submitting your email address on this website, you agree to receive emails from us. You can cancel your participation in any of these email lists at any time by clicking on the opt-out link included in each email. We only send emails to people who have authorized us to contact them. We do not send unsolicited commercial emails.</p>
+        <p>Note: If at any time you would like to unsubscribe from receiving future emails, we include detailed unsubscribe instructions at the bottom of each email.</p>
+      </section>
+
+      <section>
+        <h2>How Long Do We Keep Your Information?</h2>
+        <p>We keep your information only so long as we need it to provide Threatcl Cloud to you and fulfill the purposes described in this policy. When we no longer need to use your information and there is no need for us to keep it to comply with our legal or regulatory obligations, we'll either remove it from our systems or depersonalize it so that we can't identify you.</p>
+      </section>
+
+      <section>
+        <h2>How Do We Protect Your Information?</h2>
+        <p>We implement a variety of security measures to maintain the safety of your personal information. We offer the use of a secure server. All supplied sensitive information is transmitted via Secure Socket Layer (SSL) technology and then encrypted into our payment gateway providers' database, accessible only by those with special access rights who are required to keep the information confidential.</p>
+        <p>We cannot, however, ensure or warrant the absolute security of any information you transmit to Threatcl Cloud or guarantee that your information may not be accessed, disclosed, altered, or destroyed by a breach of any of our physical, technical, or managerial safeguards.</p>
+      </section>
+
+      <section>
+        <h2>Could My Information Be Transferred to Other Countries?</h2>
+        <p>Threatcl Cloud is incorporated in Australia, but leverages United States-based hosting services. Information collected via our website, through direct interactions with you, or from use of our help services may be transferred from time to time to our offices or personnel, or to third parties, located throughout the world. To the fullest extent allowed by applicable law, by using our Service, you voluntarily consent to the trans-border transfer and hosting of such information.</p>
+      </section>
+
+      <section>
+        <h2>Can I Update or Correct My Information?</h2>
+        <p>You have the right to request updates or corrections to the information Threatcl Cloud collects. You can contact us to:</p>
+        <ul>
+          <li>Update or correct your personally identifiable information</li>
+          <li>Change your preferences with respect to communications and other information you receive from us</li>
+          <li>Delete the personally identifiable information maintained about you on our systems by cancelling your account</li>
+        </ul>
+        <p>To protect your privacy and security, we may take reasonable steps to verify your identity before granting you profile access or making corrections. You are responsible for maintaining the secrecy of your unique password and account information at all times.</p>
+      </section>
+
+      <section>
+        <h2>Sale of Business</h2>
+        <p>We reserve the right to transfer information to a third party in the event of a sale, merger, or other transfer of all or substantially all of the assets of Threatcl Cloud, or in the event that we discontinue our business or file a petition in bankruptcy, reorganization, or similar proceeding, provided that the third party agrees to adhere to the terms of this Privacy Policy.</p>
+      </section>
+
+      <section>
+        <h2>Cookies</h2>
+        <p>Threatcl Cloud uses "Cookies" to identify the areas of our website that you have visited. A Cookie is a small piece of data stored on your computer or mobile device by your web browser. We use Cookies to enhance the performance and functionality of our website but are non-essential to their use. Most web browsers can be set to disable the use of Cookies. However, if you disable Cookies, you may not be able to access functionality on our website correctly or at all. We never place Personally Identifiable Information in Cookies.</p>
+        <p>Wherever you're located you may also set your browser to block cookies and similar technologies, but this action may block essential cookies and prevent our website from functioning properly.</p>
+      </section>
+
+      <section>
+        <h2>Payment Details</h2>
+        <p>We may provide paid products or services within Threatcl Cloud. In that case, we use third-party services (Stripe) for payment processing. We will not store or collect your payment card details. That information is provided directly to our third-party payment processor whose use of your personal information is governed by their Privacy Policy. These payment processors adhere to the standards set by the PCI Security Standards Council.</p>
+      </section>
+
+      <section>
+        <h2>Kids' Privacy</h2>
+        <p>We do not address anyone under the age of 16. We do not knowingly collect personally identifiable information from anyone under the age of 16. If you are a parent or guardian and are aware that your child has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from anyone under the age of 16 without verification of parental consent, we take steps to remove that information from our servers.</p>
+      </section>
+
+      <section>
+        <h2>GDPR — General Data Protection Regulation</h2>
+        <p>We may be collecting and using information from you if you are from the European Economic Area (EEA). GDPR is an EU-wide privacy and data protection law that regulates how EU residents' data is protected by companies and enhances the control EU residents have over their personal data.</p>
+        <p>The GDPR is relevant to any globally operating company and not just EU-based businesses. Our customers' data is important irrespective of where they are located, which is why we have implemented GDPR controls as our baseline standard for all our operations worldwide.</p>
+        <p>The Data Protection Principles include requirements such as:</p>
+        <ul>
+          <li>Personal data collected must be processed in a fair, legal, and transparent way and should only be used in a way that a person would reasonably expect.</li>
+          <li>Personal data should only be collected to fulfil a specific purpose and it should only be used for that purpose.</li>
+          <li>Personal data should be held no longer than necessary to fulfil its purpose.</li>
+          <li>People covered by the GDPR have the right to access their own personal data, request a copy of their data, and request that their data be updated, deleted, restricted, or moved to another organization.</li>
+        </ul>
+        <p>Threatcl Cloud processes or stores all personal data in fully vetted, DPA-compliant vendors. We do store all conversation and personal data for up to 6 years unless your account is deleted. In which case, we dispose of all data in accordance with our Terms of Service and Privacy Policy, but will not hold it longer than 60 days.</p>
+      </section>
+
+      <section>
+        <h2>California Residents (CCPA)</h2>
+        <p>The California Consumer Privacy Act (CCPA) requires us to disclose categories of Personal Information we collect and how we use it. You may exercise the following rights:</p>
+        <ul>
+          <li><strong>Right to Know and Access.</strong> You may submit a verifiable request for information regarding the categories of Personal Information we collect, use, or share, and the specific pieces of Personal Information we have collected about you.</li>
+          <li><strong>Right to Equal Service.</strong> We will not discriminate against you if you exercise your privacy rights.</li>
+          <li><strong>Right to Delete.</strong> You may submit a verifiable request to close your account and we will delete Personal Information about you that we have collected.</li>
+          <li><strong>Right to Opt Out.</strong> You may request that we not sell your personal data. We do not sell the Personal Information of our users.</li>
+        </ul>
+        <p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
+      </section>
+
+      <section>
+        <h2>Changes to This Privacy Policy</h2>
+        <p>We may change our Service and policies, and we may need to make changes to this Privacy Policy so that they accurately reflect our Service and policies. Unless otherwise required by law, we will notify you before we make changes to this Privacy Policy and give you an opportunity to review them before they go into effect. If you continue to use the Service, you will be bound by the updated Privacy Policy.</p>
+      </section>
+
+      <section>
+        <h2>Contact Us</h2>
+        <p>Don't hesitate to contact us if you have any questions about this Privacy Policy.</p>
+        <ul>
+          <li>Via Email: <a href="mailto:support@threatcl.com">support@threatcl.com</a></li>
+        </ul>
+      </section>
+
+      <p class="last-updated">Last updated: April 2026</p>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="logo">
+              <img src="/assets/images/full_colour_unshaded_lockup.svg" alt="threatcl cloud" class="footer-logo-img">
+            </a>
+            <p>
+              Collaborative threat modeling as code. Transform scattered HCL files
+              into organizational security intelligence.
+            </p>
+          </div>
+
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul class="footer-links">
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#pricing">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul class="footer-links">
+              <li><a href="https://threatcl.dev/cloud/overview/">Documentation</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul class="footer-links">
+              <li><a href="/company/security">Security</a></li>
+              <li><a href="/company/privacy">Privacy</a></li>
+              <li><a href="/company/terms">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 Threatcl Cloud. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="https://github.com/threatcl/threatcl" target="_blank">GitHub</a>
+            <a href="https://discord.gg/MN8eJwjtpf" target="_blank">Discord</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
