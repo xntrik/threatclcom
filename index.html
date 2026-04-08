@@ -463,6 +463,19 @@ layout: null
       margin-bottom: 3rem;
     }
 
+    .section-description a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(0, 212, 170, 0.3);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .section-description a:hover {
+      color: var(--accent-cyan-dim);
+      border-bottom-color: var(--accent-cyan);
+    }
+
     /* Problem Section */
     .problems {
       background: var(--bg-primary);
