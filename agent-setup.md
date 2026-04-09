@@ -9,6 +9,14 @@ controls. The `threatcl` CLI is the primary interface.
 
 ## Installation
 
+### Desktop AI Apps, or Coding Agents?
+
+There are two ways to interact with Threatcl Cloud with AI tools:
+
+1. **Coding Agents** (Claude Code, Codex, Cursor etc) - install the skill and use the `threatcl` CLI. This is best for engineers already working this way. The rest of this setup focuses on this.
+
+2. **Desktop AI Apps** (Claude Desktop, ChatGPT Desktop, Cursor Chat etc) - Threatcl Cloud also supports an MCP Server. If the user would like to explore that, visit https://help.threatcl.com/article/9-mcp-connector
+
 ### Step 1: Install the skill
 
 **Claude Code:**
