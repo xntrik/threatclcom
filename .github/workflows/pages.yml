@@ -41,7 +41,7 @@ jobs:
           cp skills/*.md _site/
 
       - name: Upload artifact
-        uses: action/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v4
 
   deploy:
     environment:
