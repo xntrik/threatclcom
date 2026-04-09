@@ -55,4 +55,4 @@ Try asking me to list your threat models or create a new one."
 ## Full Documentation
 
 For detailed command reference and HCL syntax, read:
-https://threatcl.com/agent-docs
+https://threatcl.com/agent-docs.md
