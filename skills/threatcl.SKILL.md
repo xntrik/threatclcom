@@ -9,30 +9,33 @@ description: >
 
 # Threatcl Cloud — Agent Skill
 
-You are helping a security or software engineer work with threat models using
-Threatcl Cloud and the `threatcl` CLI tool.
+You are helping a security or software engineer work with threat models using Threatcl Cloud and the `threatcl` CLI.
 
 ## Prerequisites
 
-Before using any commands, verify the CLI is available and authenticated:
+Before running any `threatcl cloud` command in a session, confirm the CLI is available and authenticated:
 
-1. Run `threatcl version` to confirm the CLI is installed
-2. Run `threatcl cloud whoami` to confirm authentication
-3. If not authenticated, tell the user to run `threatcl cloud login` and
-   complete the browser-based authentication flow
+1. `threatcl version` — confirm the CLI is installed
+2. `threatcl cloud whoami` — confirm authentication and note the org slug
 
-If the CLI is not installed, suggest:
+**If `whoami` fails with a connection error** (not an auth error), the CLI is probably pointed at the wrong endpoint. Today, `threatcl cloud` requires:
+```bash
+export THREATCL_API_URL=https://beta-api.threatcl.com
+```
+Set it in-session, and suggest the user persist it in their shell profile.
+
+**If `whoami` fails with an auth error**, tell the user to run `threatcl cloud login` and complete the browser flow.
+
+If the CLI isn't installed at all:
 - macOS/Linux: `brew install threatcl`
 - Go: `go install github.com/threatcl/threatcl/cmd/threatcl@latest`
-- Or download from https://github.com/threatcl/threatcl/releases
+- Releases: https://github.com/threatcl/threatcl/releases
 
-If the `threatcl cloud` commands don't work, the ENV var `THREATCL_API_URL` may need to be set to `https://beta-api.threatcl.com`
+For deeper reference docs: https://threatcl.dev/cloud/overview/
+
+Every `threatcl cloud` subcommand supports `-h` — use it when you're unsure about flags rather than guessing.
 
 ## Core Workflows
-
-Remember to always use the `-h` flag to get expanded options or sub-commands for all `threatcl cloud` commands.
-
-If the user ever wants to review documentation, they can also visit https://threatcl.dev/cloud/overview/
 
 ### Listing and Viewing Threat Models
 
@@ -70,10 +73,7 @@ threatcl cloud view -model-id <slug>
 threatcl cloud view -model-id <slug> -org-id <orgId>
 ```
 
-`threatcl cloud view` is the preferred way to inspect a model when library
-refs are in use — `threatcl view` (the local-only command) shows the raw
-`ref = "..."` lines without resolving them, whereas `threatcl cloud view`
-renders the fully-enriched markdown.
+`threatcl cloud view` is the preferred way to inspect a model when library refs are in use — `threatcl view` (the local-only command) shows the raw `ref = "..."` lines without resolving them, whereas `threatcl cloud view` renders the fully-enriched markdown.
 
 ### Searching Threats and Controls
 
@@ -100,11 +100,9 @@ threatcl cloud search -threatmodel-id "<uuid>"
 threatcl cloud search -impacts "Confidentiality" -stride "Info Disclosure" -has-controls=true
 ```
 
-Always suggest `threatcl cloud search -h` if the user needs more filter options.
-
 ### Creating and Pushing Threat Models
 
-Every HCL file that syncs to Threatcl Cloud needs a `backend` block:
+Every HCL file that syncs to Threatcl Cloud needs a `backend` block. The `organization` slug comes from `threatcl cloud whoami` — if the user doesn't know it, run that first.
 
 ```hcl
 spec_version = "0.2.4"
@@ -175,11 +173,7 @@ control "logging" {
 
 ### Working with Policies
 
-Policies are Rego (Open Policy Agent) rules that evaluate threat models against
-organizational standards — for example, "every internet-facing model must have
-at least one Spoofing control" or "no threat may be unmitigated if it impacts
-Confidentiality." Each policy has a severity (`error`, `warning`, `info`) and
-can be enabled/disabled or enforced.
+Policies are Rego (Open Policy Agent) rules that evaluate threat models against organizational standards — for example, "every internet-facing model must have at least one Spoofing control" or "no threat may be unmitigated if it impacts Confidentiality." Each policy has a severity (`error`, `warning`, `info`) and can be enabled/disabled or enforced.
 
 ```bash
 # List all policies in the organization
@@ -231,10 +225,7 @@ threatcl cloud policy evaluations -model-id <uuid> -limit 50
 threatcl cloud policy evaluation -model-id <uuid> -eval-id <eval-uuid>
 ```
 
-When helping a user author a new Rego policy, always run
-`threatcl cloud policy validate <file>.rego` before creating it — this catches
-syntax errors and schema mismatches without creating a half-broken policy in
-the org.
+When helping a user author a new Rego policy, always run `threatcl cloud policy validate <file>.rego` before creating it — this catches syntax errors and schema mismatches without creating a half-broken policy in the org.
 
 ### Local-Only Operations (No Cloud Required)
 
@@ -242,8 +233,8 @@ The `threatcl` CLI also works purely locally:
 
 ```bash
 # Validate HCL syntax (no cloud connection needed)
-# Be careful though, as this validation doesn't appropriately validate backend
-# or other threatcl cloud blocks or attributes
+# Note: this does NOT validate backend blocks or other threatcl cloud
+# attributes — use `threatcl cloud validate` for that.
 threatcl validate <file>.hcl
 
 # List threat models in local files
@@ -418,43 +409,21 @@ data_flow_diagram_v2 "Diagram name" {
 
 ## Behavioral Guidelines
 
-1. **Always check auth first** — Run `threatcl cloud whoami` before any cloud
-   operation. If it fails, guide the user through `threatcl cloud login`.
+1. **Validate before pushing** — Always run `threatcl cloud validate` before `threatcl cloud push`. Catches org mismatches and HCL errors early.
 
-2. **Validate before pushing** — Always run `threatcl cloud validate` before
-   `threatcl cloud push`. Catches org mismatches and HCL errors early.
+2. **Use search to find gaps** — When reviewing a threat model, use `threatcl cloud search -has-controls=false` to find unmitigated threats.
 
-3. **Use search to find gaps** — When reviewing a threat model, use
-   `threatcl cloud search -has-controls=false` to find unmitigated threats.
+3. **Reference library items** — When adding threats or controls, check the library first with `threatcl cloud library export` or `threatcl cloud search`. Use `ref` attributes to link to library items rather than duplicating definitions.
 
-4. **Reference library items** — When adding threats or controls, check the
-   library first with `threatcl cloud library export` or
-   `threatcl cloud search`. Use `ref` attributes to link to library items
-   rather than duplicating definitions.
+4. **Explain STRIDE** — When helping users categorize threats, explain which STRIDE categories apply and why.
 
-5. **Explain STRIDE** — When helping users categorize threats, explain which
-   STRIDE categories apply and why.
+5. **Respect the backend block** — Never remove or modify the `backend` block unless the user explicitly asks. It links the local file to the cloud.
 
-6. **Use `-h` for discovery** — If you're unsure about a command's flags,
-   run it with `-h`. The CLI is self-documenting.
+6. **Suggest data flow diagrams** — For complex systems, suggest adding a `data_flow_diagram_v2` block and generating a visual with `threatcl dfd`.
 
-7. **Respect the backend block** — Never remove or modify the `backend`
-   block unless the user explicitly asks. It links the local file to the
-   cloud.
+7. **Validate Rego before creating policies** — When authoring or modifying a policy, always run `threatcl cloud policy validate <file>.rego` before `threatcl cloud policy create` or `update -rego-file`. This catches Rego syntax errors and schema mismatches without leaving a broken policy in the org.
 
-8. **Suggest data flow diagrams** — For complex systems, suggest adding a
-   `data_flow_diagram_v2` block and generating a visual with `threatcl dfd`.
-
-9. **Validate Rego before creating policies** — When authoring or modifying a
-   policy, always run `threatcl cloud policy validate <file>.rego` before
-   `threatcl cloud policy create` or `update -rego-file`. This catches Rego
-   syntax errors and schema mismatches without leaving a broken policy in the
-   org.
-
-10. **Use `-fail-on-error` / `-fail-on-warning` in CI** — When wiring
-    `threatcl cloud policy evaluate` into CI/CD, use these flags so that
-    policy violations actually break the build. Without them the command
-    always exits 0 regardless of result.
+8. **Use `-fail-on-error` / `-fail-on-warning` in CI** — When wiring `threatcl cloud policy evaluate` into CI/CD, use these flags so that policy violations actually break the build. Without them the command always exits 0 regardless of result.
 
 ## Environment Variables (for CI/CD context)
 
@@ -462,4 +431,4 @@ If running in CI/CD, these env vars are available instead of interactive auth:
 
 - `THREATCL_API_TOKEN` — API token (bypasses local token store)
 - `THREATCL_CLOUD_ORG` — Default organization ID
-- `THREATCL_API_URL` — API base URL override
+- `THREATCL_API_URL` — API base URL override (currently required: `https://beta-api.threatcl.com`)
