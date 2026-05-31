@@ -6,8 +6,8 @@ layout: null
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beta Access - Threatcl Cloud</title>
-  <meta name="description" content="Access the Threatcl Cloud beta. Review and accept the terms before proceeding.">
+  <title>Join the Threatcl Cloud Beta - Threat Modeling as Code</title>
+  <meta name="description" content="Your code ships hourly. Your threat model ships quarterly. Threatcl Cloud puts threat modeling where your code already lives - committed, diffed, reviewed in the PR. Join the beta.">
 
   <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 
@@ -32,18 +32,25 @@ layout: null
       --accent-cyan-glow: rgba(0, 212, 170, 0.15);
       --accent-amber: #ffb800;
       --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
 
       --border-subtle: rgba(255, 255, 255, 0.06);
       --border-medium: rgba(255, 255, 255, 0.1);
 
       --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
       --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -54,12 +61,10 @@ layout: null
       overflow-x: hidden;
     }
 
+    /* Background */
     .bg-grid {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       background-image:
         linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
@@ -84,12 +89,28 @@ layout: null
     .content-wrapper {
       position: relative;
       z-index: 1;
-      min-height: 100vh;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.5rem 2rem;
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      justify-content: space-between;
     }
 
     .logo {
@@ -98,7 +119,6 @@ layout: null
       gap: 0;
       text-decoration: none;
       color: var(--text-primary);
-      margin-bottom: 3rem;
     }
 
     .logo-mark {
@@ -112,16 +132,94 @@ layout: null
       margin-left: 1.25rem;
     }
 
-    .beta-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-medium);
-      border-radius: 16px;
-      max-width: 640px;
-      width: 100%;
-      padding: 2.5rem;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
     }
 
-    .beta-badge {
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-medium);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-cyan-dim);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-cyan-glow);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-large {
+      padding: 0.9rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+    }
+
+    .hero-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -136,7 +234,7 @@ layout: null
       letter-spacing: 0.03em;
     }
 
-    .beta-badge-dot {
+    .hero-badge-dot {
       width: 6px;
       height: 6px;
       background: var(--accent-cyan);
@@ -149,17 +247,403 @@ layout: null
       50% { opacity: 0.4; }
     }
 
-    .beta-card h1 {
-      font-size: 1.75rem;
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .hero-description strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-medium);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-learn {
+      margin-top: 2rem;
+    }
+
+    /* Terminal Demo */
+    .terminal {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-medium);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.5),
+        0 20px 50px -10px rgba(0, 0, 0, 0.5),
+        0 0 100px -20px var(--accent-cyan-glow);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red { background: #ff5f57; }
+    .terminal-dot.yellow { background: #febc2e; }
+    .terminal-dot.green { background: #28c840; }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      min-height: 320px;
+    }
+
+    .terminal-comment { color: var(--text-muted); }
+    .terminal-keyword { color: var(--accent-purple); }
+    .terminal-string { color: var(--accent-amber); }
+
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 700;
       letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title .gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin-bottom: 3rem;
+    }
+
+    /* Why now */
+    .why {
+      background: var(--bg-primary);
+    }
+
+    /* Features */
+    .features {
+      background: var(--bg-deep);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      transition: all 0.3s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-cyan-glow);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-title {
+      font-size: 1.2rem;
+      font-weight: 600;
       margin-bottom: 0.75rem;
     }
 
-    .beta-card > p {
+    .feature-text {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .feature-available-marker {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .feature-available-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    /* How it works */
+    .how-it-works {
+      background: var(--bg-primary);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--border-subtle), var(--accent-cyan), var(--border-subtle));
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      background: var(--bg-elevated);
+      border: 2px solid var(--accent-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Closing CTA */
+    .cta {
+      background: var(--bg-deep);
+      text-align: center;
+      padding: 8rem 2rem;
+    }
+
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-badge-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .btn-badge {
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-medium);
+      border-radius: 999px;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* Proof terminal inside the features section */
+    .proof-terminal {
+      max-width: 760px;
+      margin: 0 auto 3rem;
+    }
+
+    /* Product screenshot - the "…and out comes this" payoff */
+    .showcase-frame {
+      margin-top: 4rem;
+      text-align: center;
+    }
+
+    .showcase-frame img {
+      width: 100%;
+      max-width: 960px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid var(--border-medium);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
+    }
+
+    .showcase-caption {
+      margin-top: 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Beta gate card - lifted into the hero so it's the first thing in reach */
+    .beta-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-medium);
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      padding: 2.5rem;
+      text-align: left;
+      scroll-margin-top: 90px;
+    }
+
+    .beta-card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .beta-card-intro {
       color: var(--text-secondary);
       font-size: 0.95rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .terms-box {
@@ -172,25 +656,9 @@ layout: null
       overflow-y: auto;
     }
 
-    .terms-box::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .terms-box::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .terms-box::-webkit-scrollbar-thumb {
-      background: var(--bg-hover);
-      border-radius: 3px;
-    }
-
-    .terms-box h2 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-primary);
-    }
+    .terms-box::-webkit-scrollbar { width: 6px; }
+    .terms-box::-webkit-scrollbar-track { background: transparent; }
+    .terms-box::-webkit-scrollbar-thumb { background: var(--bg-hover); border-radius: 3px; }
 
     .terms-box h3 {
       font-size: 0.9rem;
@@ -200,36 +668,13 @@ layout: null
       color: var(--text-primary);
     }
 
+    .terms-box h3:first-child { margin-top: 0; }
+
     .terms-box p {
       font-size: 0.85rem;
       color: var(--text-secondary);
       line-height: 1.7;
       margin-bottom: 0.75rem;
-    }
-
-    .terms-box ul {
-      list-style: none;
-      margin-bottom: 0.75rem;
-    }
-
-    .terms-box ul li {
-      position: relative;
-      padding-left: 1.25rem;
-      margin-bottom: 0.4rem;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .terms-box ul li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.6em;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent-cyan);
     }
 
     .accept-row {
@@ -281,57 +726,143 @@ layout: null
       align-items: center;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      font-family: var(--font-sans);
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    /* Footer */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 2rem 2rem;
     }
 
-    .btn-primary {
-      background: var(--accent-cyan);
-      color: var(--bg-deep);
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .btn-primary:hover:not(:disabled) {
-      background: var(--accent-cyan-dim);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 20px var(--accent-cyan-glow);
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .btn-primary:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+    .footer-brand {
+      max-width: 280px;
     }
 
-    .btn-ghost {
-      background: transparent;
+    .footer-brand .logo {
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo-img {
+      height: 48px;
+      width: auto;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
       color: var(--text-secondary);
-      border: 1px solid var(--border-medium);
+      line-height: 1.6;
     }
 
-    .btn-ghost:hover {
-      background: var(--bg-surface);
-      color: var(--text-primary);
+    .footer-column h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-social a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover {
+      color: var(--accent-cyan);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+      }
+
+      .steps-grid::before {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
     }
 
     @media (max-width: 768px) {
-      .beta-card {
-        padding: 1.5rem;
+      .nav-links {
+        display: none;
       }
 
-      .beta-card h1 {
-        font-size: 1.4rem;
+      .hero {
+        padding-top: 6rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .beta-card {
+        padding: 1.5rem;
       }
 
       .beta-actions {
@@ -342,6 +873,17 @@ layout: null
         width: 100%;
         justify-content: center;
       }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -350,48 +892,294 @@ layout: null
   <div class="bg-gradient"></div>
 
   <div class="content-wrapper">
-    <a href="/" class="logo">
-      <img src="/assets/images/shaded_gradient_threatcl2.svg" alt="threatcl cloud" class="logo-mark">
-      <img src="/assets/images/full_colour_wordmark3.svg" alt="threatcl cloud" class="logo-wordmark">
-    </a>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="/" class="logo">
+          <img src="/assets/images/shaded_gradient_threatcl2.svg" alt="threatcl cloud" class="logo-mark">
+          <img src="/assets/images/full_colour_wordmark3.svg" alt="threatcl cloud" class="logo-wordmark">
+        </a>
 
-    <div class="beta-card">
-      <div class="beta-badge">
-        <span class="beta-badge-dot"></span>
-        Beta
+        <ul class="nav-links">
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="https://threatcl.dev/cloud/overview/" target="_blank">Docs</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <a href="#join" class="btn btn-primary">Reserve your seat</a>
+        </div>
       </div>
+    </nav>
 
-      <h1>Welcome to the Threatcl Cloud Beta</h1>
-      <p>Before accessing the beta, please review and accept the following terms.</p>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Beta program · 2026
+          </div>
 
-      <div class="terms-box">
+          <h1 class="hero-title">
+            Your code ships hourly.<br>
+            Your threat model<br>
+            ships <span class="gradient">quarterly.</span>
+          </h1>
 
-        <h3>Beta Service</h3>
-        <p>Threatcl Cloud is currently in beta. By signing up, you agree to our Terms of Service and Privacy Policy, plus the following beta-specific terms:</p>
+          <p class="hero-description">
+            Claude Code and Cursor ship changes by the hour, but your last threat-modeling
+            workshop was a quarter ago. <strong>Threatcl Cloud puts your threat models where
+            your code already lives:</strong> plain-text HCL your engineers &amp; agents
+            read and update in the same PR. Then Cloud makes it a program your team can
+            run: one central workspace, shared threat and control libraries, and policies
+            that check every model on every change, not every quarter.
+          </p>
 
-        <h3>Data</h3>
-        <p>Your data may be reset. We may delete or reset Customer Data during the beta as the service evolves. Do not use Threatcl Cloud as your sole storage for any threat model you cannot afford to lose. Export regularly.</p>
+          <div class="hero-pills">
+            <span class="pill">code-first</span>
+            <span class="pill">agentic-ready</span>
+            <span class="pill">audit-friendly</span>
+          </div>
 
-        <h3>Service Level</h3>
-        <p> No uptime guarantee. The beta is provided without any service level commitment. Features may change, break, or disappear without notice.</p>
+          <div class="hero-learn">
+            <a href="#learn-more" class="btn btn-ghost">Want to learn more? ↓</a>
+          </div>
+        </div>
 
-        <h3>Feedback</h3>
-        <p>Help us improve it. Please report bugs and security issues to support@threatcl.com - we read every report.</p>
+        <!-- Beta gate, lifted into the hero so warm traffic can sign up without scrolling -->
+        <div class="beta-card" id="join">
+          <h2 class="beta-card-title">Reserve your seat</h2>
+          <p class="beta-card-intro">
+            Threatcl Cloud is in active beta. Skim what to expect, agree, and you're in.
+            No credit card required.
+          </p>
 
-        <p>When Threatcl Cloud leaves beta, this notice will be removed and only the standard Terms of Service will apply.</p>
+          <div class="terms-box">
+            <h3>Beta Service</h3>
+            <p>Threatcl Cloud is currently in beta. By signing up, you agree to our Terms of Service and Privacy Policy, plus the following beta-specific terms:</p>
 
+            <h3>Data</h3>
+            <p>Your data may be reset. We may delete or reset Customer Data during the beta as the service evolves. Do not use Threatcl Cloud as your sole storage for any threat model you cannot afford to lose. Export regularly.</p>
+
+            <h3>Service Level</h3>
+            <p>No uptime guarantee. The beta is provided without any service level commitment. Features may change, break, or disappear without notice.</p>
+
+            <h3>Feedback</h3>
+            <p>Help us improve it. Please report bugs and security issues to support@threatcl.com we read every report.</p>
+
+            <p>When Threatcl Cloud leaves beta, this notice will be removed and only the standard Terms of Service will apply.</p>
+          </div>
+
+          <div class="accept-row">
+            <input type="checkbox" id="accept-terms">
+            <label for="accept-terms">I agree to the beta terms, Terms of Service, and Privacy Policy</label>
+          </div>
+
+          <div class="beta-actions">
+            <button id="continue-btn" class="btn btn-primary" disabled>Continue to Beta →</button>
+            <a href="mailto:support@threatcl.com" class="btn btn-ghost">Rather chat first?</a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="accept-row">
-        <input type="checkbox" id="accept-terms">
-        <label for="accept-terms">I Agree</label>
+    <!-- Why now -->
+    <section class="why" id="learn-more">
+      <div class="section-inner">
+        <span class="section-label">Why now</span>
+        <h2 class="section-title">Quarterly cadence can't keep up with agentic dev</h2>
+        <p class="section-description">
+          The architecture moved on three weeks ago. The diagram in the wiki is fiction.
+          A threat model that updates once a quarter is a security posture you can't actually
+          defend, so put it where it can move at the speed of your code: a plain-text file,
+          reviewed in the PR, validated in CI, like every other artifact you already trust.
+        </p>
       </div>
+    </section>
 
-      <div class="beta-actions">
-        <button id="continue-btn" class="btn btn-primary" disabled>Continue to Beta</button>
-        <a href="/" class="btn btn-ghost">Back to Home</a>
+    <!-- What you get -->
+    <section class="features" id="features">
+      <div class="section-inner">
+        <span class="section-label">In the beta</span>
+        <h2 class="section-title">Write HCL in. Get <span class="gradient">coverage, STRIDE & risk</span> out.</h2>
+        <p class="section-description">
+          If you've written Terraform, you've written this. Push your threat models to the cloud
+          and turn them into living, shareable security intelligence.
+        </p>
+
+        <div class="proof-terminal">
+          <div class="terminal">
+            <div class="terminal-header">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+              <span class="terminal-title">payments-api.hcl</span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line"><span class="terminal-comment"># Checked into the repo. Diffed in the PR.</span></div>
+              <div class="terminal-line"><span class="terminal-comment"># Reviewed by humans <em>and</em> agents.</span></div>
+              <div class="terminal-line">&nbsp;</div>
+              <div class="terminal-line"><span class="terminal-keyword">threatmodel</span> <span class="terminal-string">"payments-api"</span> {</div>
+              <div class="terminal-line">&nbsp;&nbsp;<span class="terminal-keyword">threat</span> <span class="terminal-string">"token replay"</span> {</div>
+              <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="terminal-keyword">description</span> = <span class="terminal-string">"Token replay attack"</span></div>
+              <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="terminal-keyword">stride</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= [<span class="terminal-string">"Spoofing"</span>]</div>
+              <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="terminal-keyword">control</span> <span class="terminal-string">"secure tokens"</span> {</div>
+              <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="terminal-keyword">ref</span> = <span class="terminal-string">"C-SAFEJWT"</span></div>
+              <div class="terminal-line">&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+              <div class="terminal-line">&nbsp;&nbsp;}</div>
+              <div class="terminal-line">}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-frame">
+          <img src="/assets/images/product.png" alt="Threatcl Cloud - coverage, STRIDE and risk dashboards">
+          <p class="showcase-caption">…and out comes this: coverage, STRIDE, risk, and more, all derived directly from your threat model as code.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🔎</div>
+            <h3 class="feature-title">Central Threat Registry</h3>
+            <p class="feature-text">
+              Every threat model automatically indexed with full-text search. Find all
+              integrity-related threats in seconds, and discover related models before
+              starting new ones.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">👁️</div>
+            <h3 class="feature-title">Live Dashboards</h3>
+            <p class="feature-text">
+              Coverage, STRIDE, risk, and more.. all derived directly from your threat model as code,
+              and updated when the code is. Real-time visibility across your whole portfolio.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h3 class="feature-title">Review &amp; Approvals</h3>
+            <p class="feature-text">
+              Manage the review status of threat models and get sign-offs from security,
+              legal, and compliance, without locking non-technical stakeholders out.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3 class="feature-title">AI Ready</h3>
+            <p class="feature-text">
+              MCP connector available. Let Claude Code, Cursor, and your other AI tools read
+              and reason over your threat data directly.
+            </p>
+            <p class="feature-available-note">* Available now</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="section-inner">
+        <span class="section-label">How it works</span>
+        <h2 class="section-title">Your workflow, enhanced</h2>
+        <p class="section-description">
+          Add a backend block to your existing threatcl files. Everything else stays the same.
+        </p>
+
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3 class="step-title">Connect</h3>
+            <p class="step-text">Add the cloud backend to your HCL files. One line of configuration.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3 class="step-title">Sync</h3>
+            <p class="step-text">Run threatcl cloud push. Models sync automatically to the cloud.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3 class="step-title">Collaborate</h3>
+            <p class="step-text">Review in the browser. Comment on threats. Get approvals from stakeholders.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">04</div>
+            <h3 class="step-title">Govern</h3>
+            <p class="step-text">Enforce policies. Track coverage. Report to leadership with real data.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="cta">
+      <div class="cta-inner">
+        <h2 class="cta-title">If you ship with AI, there's a seat for you</h2>
+        <p class="cta-description">
+          Threat modeling out of the wiki and into your repo. Free to start, no credit card.
+        </p>
+        <div class="cta-actions">
+          <a href="#join" class="btn btn-primary btn-large">Reserve your seat ↑</a>
+          <span class="btn-badge-wrap">
+            <a href="https://discord.gg/MN8eJwjtpf" target="_blank" class="btn btn-ghost btn-large">Join our Community</a>
+            <span class="btn-badge">Discord</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="logo">
+              <img src="/assets/images/full_colour_unshaded_lockup.svg" alt="threatcl cloud" class="footer-logo-img">
+            </a>
+            <p>
+              Collaborative threat modeling as code. Transform scattered HCL files
+              into organizational security intelligence.
+            </p>
+          </div>
+
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul class="footer-links">
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#pricing">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul class="footer-links">
+              <li><a href="https://threatcl.dev/cloud/overview/">Documentation</a></li>
+              <li><a href="https://threatcl.beehiiv.com/">Newsletter</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul class="footer-links">
+              <li><a href="/company/security">Security</a></li>
+              <li><a href="/company/privacy">Privacy</a></li>
+              <li><a href="/company/terms">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 Threatcl Cloud. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="https://github.com/threatcl/threatcl" target="_blank">GitHub</a>
+            <a href="https://discord.gg/MN8eJwjtpf" target="_blank">Discord</a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 
   <script>
@@ -408,5 +1196,8 @@ layout: null
       }
     });
   </script>
+
+  <!-- 100% privacy-first analytics -->
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 </body>
 </html>
