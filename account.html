@@ -1,0 +1,1033 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account - Threatcl Cloud</title>
+  <meta name="description" content="Your Threatcl Cloud account. Log in or jump straight into the app.">
+  <meta name="robots" content="noindex">
+
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-deep: #050508;
+      --bg-primary: #0a0a0f;
+      --bg-elevated: #12121a;
+      --bg-surface: #1a1a24;
+      --bg-hover: #22222e;
+
+      --text-primary: #e8e8ed;
+      --text-secondary: #9898a6;
+      --text-muted: #5a5a6a;
+
+      --accent-cyan: #00d4aa;
+      --accent-cyan-dim: #00a888;
+      --accent-cyan-glow: rgba(0, 212, 170, 0.15);
+      --accent-amber: #ffb800;
+      --accent-amber-dim: #cc9400;
+      --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
+
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-medium: rgba(255, 255, 255, 0.1);
+
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100vh;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 212, 170, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.08), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.5rem 2rem;
+      background: rgba(5, 5, 8, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+      overflow: visible;
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-mark {
+      height: 65px;
+      width: auto;
+    }
+
+    .logo-wordmark {
+      height: 30px;
+      width: auto;
+      margin-left: 1.25rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-medium);
+    }
+
+    .btn-ghost:hover {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--border-medium);
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: var(--bg-deep);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-cyan-dim);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-cyan-glow);
+    }
+
+    /* ----------------------------------------------------------------
+       Auth-aware nav slot
+       ---------------------------------------------------------------- */
+    /* Reserve horizontal space so swapping logged-out -> logged-in does
+       not visibly shift the rest of the nav. */
+    .auth-slot {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 42px;
+      justify-content: flex-end;
+    }
+
+    /* Subtle "still probing" affordance. Added by JS only, so no-JS
+       visitors never see a dimmed button. */
+    .auth-slot.is-checking .btn {
+      opacity: 0.55;
+    }
+
+    .auth-spinner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--border-medium);
+      border-top-color: var(--accent-cyan);
+      animation: auth-spin 0.7s linear infinite;
+      flex: none;
+    }
+
+    @keyframes auth-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .auth-spinner { animation: none; }
+    }
+
+    /* User menu (logged-in) */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-menu-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.35rem 0.6rem 0.35rem 0.4rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-medium);
+      border-radius: 100px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .user-menu-trigger:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-medium);
+    }
+
+    .user-menu-trigger:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 2px;
+    }
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: var(--bg-deep);
+      font-size: 0.75rem;
+      font-weight: 700;
+      object-fit: cover;
+      overflow: hidden;
+    }
+
+    .user-menu-name {
+      max-width: 12ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-menu-caret {
+      width: 14px;
+      height: 14px;
+      flex: none;
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
+    }
+
+    .user-menu-trigger[aria-expanded="true"] .user-menu-caret {
+      transform: rotate(180deg);
+    }
+
+    .user-menu-panel {
+      position: absolute;
+      top: calc(100% + 0.6rem);
+      right: 0;
+      min-width: 260px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-medium);
+      border-radius: 12px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      padding: 0.5rem;
+      z-index: 200;
+    }
+
+    .user-menu-panel[hidden] {
+      display: none;
+    }
+
+    .user-menu-identity {
+      padding: 0.75rem 0.75rem 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 0.4rem;
+    }
+
+    .user-menu-identity .name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-menu-identity .email {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-menu-orgs {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .org-chip {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 100px;
+      padding: 0.15rem 0.6rem;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .user-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      text-align: left;
+      transition: background 0.15s ease;
+    }
+
+    .user-menu-item:hover {
+      background: var(--bg-surface);
+    }
+
+    .user-menu-item:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: -2px;
+    }
+
+    .user-menu-item svg {
+      width: 16px;
+      height: 16px;
+      flex: none;
+      color: var(--text-secondary);
+    }
+
+    /* ----------------------------------------------------------------
+       Page body / status card
+       ---------------------------------------------------------------- */
+    .page-header {
+      padding: 10rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .page-header h1 .gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .page-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+    }
+
+    .status-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: none;
+      background: var(--text-muted);
+    }
+
+    .status-dot.checking { background: var(--accent-amber); }
+    .status-dot.in       { background: var(--accent-cyan); }
+    .status-dot.out      { background: var(--text-muted); }
+
+    .status-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .status-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-detail {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      background: var(--bg-deep);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-top: 0.5rem;
+    }
+
+    .status-detail[hidden] { display: none; }
+
+    .note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .note code {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      background: var(--bg-deep);
+      padding: 0.1rem 0.4rem;
+      border-radius: 5px;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-subtle);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .footer-brand { max-width: 280px; }
+    .footer-brand .logo { margin-bottom: 1rem; }
+    .footer-logo-img { height: 48px; width: auto; }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .footer-column h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.75rem; }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover { color: var(--accent-cyan); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer-social { display: flex; gap: 1rem; }
+
+    .footer-social a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-social a:hover { color: var(--accent-cyan); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      /* Keep the auth slot visible on mobile — it's the whole point of
+         this page — but let the menu name collapse to just the avatar. */
+      .user-menu-name { display: none; }
+      .page-header h1 { font-size: 2rem; }
+      .page-header p { font-size: 1rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-gradient"></div>
+
+  <div class="content-wrapper">
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="/" class="logo">
+          <img src="/assets/images/shaded_gradient_threatcl2.svg" alt="threatcl cloud" class="logo-mark">
+          <img src="/assets/images/full_colour_wordmark3.svg" alt="threatcl cloud" class="logo-wordmark">
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#how-it-works">How It Works</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="https://threatcl.dev/cloud/overview/" target="_blank">CLI Docs</a></li>
+        </ul>
+
+        <!--
+          Auth-aware nav slot.
+          The markup below is the FAIL-SAFE, logged-out, no-JS default:
+          a plain "Log in" link + the standard "Get Started Free" CTA.
+          The script at the bottom replaces the slot contents only if the
+          refresh probe succeeds. Any error / timeout / non-200 leaves this
+          default in place.
+        -->
+        <div class="nav-cta">
+          <div id="auth-slot" class="auth-slot" aria-live="polite">
+            <a href="https://beta.threatcl.com/login" class="btn btn-ghost" data-auth-login>Log in</a>
+            <a href="/beta" class="btn btn-primary">Get Started Free</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <h1>Your <span class="gradient">Account</span></h1>
+      <p>Pick up where you left off — or log in to get started.</p>
+    </header>
+
+    <div class="page-content">
+      <div class="status-card">
+        <div class="status-row">
+          <span id="status-dot" class="status-dot checking" aria-hidden="true"></span>
+          <span id="status-label" class="status-label">Checking your session…</span>
+        </div>
+        <p id="status-message">
+          We’re checking whether you’re already signed in to Threatcl Cloud.
+          This happens entirely in your browser.
+        </p>
+        <pre id="status-detail" class="status-detail" hidden></pre>
+
+        <div class="note">
+          This page detects your login state client-side by calling the app’s
+          refresh endpoint with your existing session cookie. Your access token
+          is held in memory for a single request and is never stored. Sign in or
+          out over at <code>beta.threatcl.com</code>, then reload this page to see
+          the button update.
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="/" class="logo">
+              <img src="/assets/images/full_colour_unshaded_lockup.svg" alt="threatcl cloud" class="footer-logo-img">
+            </a>
+            <p>
+              Collaborative threat modeling as code. Transform scattered HCL files
+              into organizational security intelligence.
+            </p>
+          </div>
+
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul class="footer-links">
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#pricing">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul class="footer-links">
+              <li><a href="https://threatcl.dev/cloud/overview/">Documentation</a></li>
+              <li><a href="https://threatcl.beehiiv.com/">Newsletter</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Company</h4>
+            <ul class="footer-links">
+              <li><a href="/company/security">Security</a></li>
+              <li><a href="/company/privacy">Privacy</a></li>
+              <li><a href="/company/terms">Terms</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 Threatcl Cloud. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="https://github.com/threatcl/threatcl" target="_blank">GitHub</a>
+            <a href="https://discord.gg/MN8eJwjtpf" target="_blank">Discord</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+  /* =====================================================================
+     Auth-aware nav button — client-side login detection for the static
+     marketing site. Pure vanilla JS, no dependencies, GitHub Pages safe.
+
+     HOW IT WORKS
+     ------------
+     threatcl.com is same-site with beta-api.threatcl.com, so the app's
+     HttpOnly + SameSite=Strict refresh cookie is sent on a credentialed
+     fetch to the API. We POST /auth/refresh:
+       - 200 + { access_token } => logged in  (then optionally GET /users/me)
+       - anything else / error  => logged out
+     We render logged-out first (already in the HTML), then upgrade.
+
+     CONFIG — change these in ONE place when the beta-* subdomains graduate
+     to production (e.g. api.threatcl.com / app.threatcl.com).
+     ===================================================================== */
+  (function () {
+    'use strict';
+
+    var CONFIG = {
+      API_BASE: 'https://beta-api.threatcl.com/api/v1',
+      APP_URL:  'https://beta.threatcl.com',
+      // Login path on the app. If this 404s, set to '' and let the app
+      // route from its root.
+      LOGIN_PATH: '/login',
+      // Hard ceiling on the probe so a hung request can never keep the
+      // button stuck in a loading state.
+      PROBE_TIMEOUT_MS: 6000
+    };
+    CONFIG.LOGIN_URL = CONFIG.APP_URL + CONFIG.LOGIN_PATH;
+
+    var slot = document.getElementById('auth-slot');
+    if (!slot) return;
+
+    /* ---- tiny DOM helpers (textContent only — user data is never
+            injected as HTML) ----------------------------------------- */
+    function clear(node) {
+      node.replaceChildren();
+    }
+
+    function el(tag, attrs, children) {
+      var node = document.createElement(tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (k) {
+          if (k === 'text') { node.textContent = attrs[k]; }
+          else if (attrs[k] != null) { node.setAttribute(k, attrs[k]); }
+        });
+      }
+      (children || []).forEach(function (c) {
+        if (c == null) return;
+        node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+      });
+      return node;
+    }
+
+    function svgEl(viewBox, paths, className) {
+      var ns = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(ns, 'svg');
+      if (className) svg.setAttribute('class', className);
+      svg.setAttribute('viewBox', viewBox);
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('aria-hidden', 'true');
+      paths.forEach(function (d) {
+        var p = document.createElementNS(ns, 'path');
+        p.setAttribute('d', d);
+        p.setAttribute('stroke', 'currentColor');
+        p.setAttribute('stroke-width', '2');
+        p.setAttribute('stroke-linecap', 'round');
+        p.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(p);
+      });
+      return svg;
+    }
+
+    /* ---- defensive normalisation of /users/me ----------------------- */
+    function firstString() {
+      for (var i = 0; i < arguments.length; i++) {
+        var v = arguments[i];
+        if (typeof v === 'string' && v.trim()) return v.trim();
+      }
+      return '';
+    }
+
+    function normalizeUser(raw) {
+      if (!raw || typeof raw !== 'object') return { name: '', email: '', avatar: '', orgs: [] };
+      var u = (raw.user && typeof raw.user === 'object') ? raw.user
+            : (raw.data && typeof raw.data === 'object' && raw.data.user) ? raw.data.user
+            : raw;
+
+      var name = firstString(u.name, u.display_name, u.displayName, u.full_name, u.fullName, u.username);
+      var email = firstString(u.email, u.email_address, u.emailAddress);
+      var avatar = firstString(u.avatar_url, u.avatarUrl, u.avatar, u.picture, u.image, u.gravatar);
+
+      var orgsRaw = u.organizations || u.orgs || raw.organizations || raw.orgs || [];
+      var orgs = Array.isArray(orgsRaw) ? orgsRaw.map(function (o) {
+        if (typeof o === 'string') return o;
+        if (o && typeof o === 'object') return firstString(o.name, o.display_name, o.displayName, o.slug, o.title);
+        return '';
+      }).filter(Boolean) : [];
+
+      return { name: name, email: email, avatar: avatar, orgs: orgs };
+    }
+
+    function initials(user) {
+      var src = user.name || user.email || '';
+      var parts = src.replace(/@.*/, '').split(/[\s._-]+/).filter(Boolean);
+      if (!parts.length) return 'U';
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    /* ---- the probe -------------------------------------------------- */
+    function detectAuth() {
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, CONFIG.PROBE_TIMEOUT_MS) : null;
+      var signal = ctrl ? ctrl.signal : undefined;
+
+      return fetch(CONFIG.API_BASE + '/auth/refresh', {
+        method: 'POST',
+        credentials: 'include',
+        signal: signal
+      }).then(function (r) {
+        if (!r.ok) return null;
+        return r.json().catch(function () { return null; });
+      }).then(function (data) {
+        var token = data && data.access_token;
+        if (!token) return null;
+        // Optional profile fetch. Token stays in this closure only —
+        // never persisted, never returned to the caller.
+        return fetch(CONFIG.API_BASE + '/users/me', {
+          headers: { Authorization: 'Bearer ' + token },
+          signal: signal
+        }).then(function (r) {
+          return r.ok ? r.json().catch(function () { return null; }) : null;
+        }).then(function (me) {
+          return { user: normalizeUser(me) };
+        }).catch(function () {
+          // Logged in, but profile fetch failed — show a generic state.
+          return { user: { name: '', email: '', avatar: '', orgs: [] } };
+        });
+      }).catch(function () {
+        return null;
+      }).then(function (result) {
+        if (timer) clearTimeout(timer);
+        return result;
+      });
+    }
+
+    /* ---- rendering -------------------------------------------------- */
+    function renderLoggedOut() {
+      slot.classList.remove('is-checking');
+      clear(slot);
+      slot.appendChild(el('a', {
+        href: CONFIG.LOGIN_URL, class: 'btn btn-ghost', 'data-auth-login': '', text: 'Log in'
+      }));
+      slot.appendChild(el('a', { href: '/beta', class: 'btn btn-primary', text: 'Get Started Free' }));
+    }
+
+    function renderLoggedIn(user) {
+      slot.classList.remove('is-checking');
+      clear(slot);
+
+      var label = user.name || user.email || 'Account';
+
+      // Avatar (image if we have one, otherwise initials).
+      var avatarNode;
+      if (user.avatar) {
+        avatarNode = el('img', { class: 'avatar', src: user.avatar, alt: '' });
+        avatarNode.addEventListener('error', function () {
+          avatarNode.replaceWith(el('span', { class: 'avatar', 'aria-hidden': 'true', text: initials(user) }));
+        });
+      } else {
+        avatarNode = el('span', { class: 'avatar', 'aria-hidden': 'true', text: initials(user) });
+      }
+
+      var caret = svgEl('0 0 24 24', ['M6 9l6 6 6-6'], 'user-menu-caret');
+
+      var trigger = el('button', {
+        type: 'button',
+        class: 'user-menu-trigger',
+        'aria-haspopup': 'true',
+        'aria-expanded': 'false',
+        'aria-label': 'Account menu for ' + label
+      }, [
+        avatarNode,
+        el('span', { class: 'user-menu-name', text: label }),
+        caret
+      ]);
+
+      // Panel: identity + orgs + "Open app".
+      var identityChildren = [ el('div', { class: 'name', text: label }) ];
+      if (user.email && user.email !== label) {
+        identityChildren.push(el('div', { class: 'email', text: user.email }));
+      }
+      if (user.orgs.length) {
+        var chips = el('div', { class: 'user-menu-orgs' });
+        user.orgs.slice(0, 6).forEach(function (o) {
+          chips.appendChild(el('span', { class: 'org-chip', text: o }));
+        });
+        identityChildren.push(chips);
+      }
+
+      var openAppIcon = svgEl('0 0 24 24', ['M7 17L17 7M17 7H9M17 7v8']);
+      var openAppItem = el('a', { href: CONFIG.APP_URL, class: 'user-menu-item' },
+        [ openAppIcon, 'Open app' ]);
+
+      // Disclosure region (not role=menu) so the identity text is exposed
+      // to assistive tech, not skipped as non-menuitem content.
+      var panel = el('div', { class: 'user-menu-panel', hidden: 'hidden' }, [
+        el('div', { class: 'user-menu-identity' }, identityChildren),
+        openAppItem
+      ]);
+
+      var menu = el('div', { class: 'user-menu' }, [ trigger, panel ]);
+
+      // Primary CTA stays alongside the menu for a one-click jump.
+      var openAppBtn = el('a', { href: CONFIG.APP_URL, class: 'btn btn-primary', text: 'Open app' });
+
+      slot.appendChild(menu);
+      slot.appendChild(openAppBtn);
+
+      wireMenu(trigger, panel);
+    }
+
+    /* ---- dropdown behaviour (disclosure pattern) -------------------- */
+    function wireMenu(trigger, panel) {
+      function isOpen() { return trigger.getAttribute('aria-expanded') === 'true'; }
+
+      function onDocClick(e) {
+        if (!panel.contains(e.target) && !trigger.contains(e.target)) close(false);
+      }
+
+      function onKeydown(e) {
+        if (e.key === 'Escape') { e.preventDefault(); close(true); }
+      }
+
+      function open() {
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+        document.addEventListener('click', onDocClick, true);
+        document.addEventListener('keydown', onKeydown, true);
+      }
+
+      function close(focusTrigger) {
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+        document.removeEventListener('click', onDocClick, true);
+        document.removeEventListener('keydown', onKeydown, true);
+        if (focusTrigger) trigger.focus();
+      }
+
+      trigger.addEventListener('click', function () {
+        if (isOpen()) { close(false); } else { open(); }
+      });
+    }
+
+    /* ---- status card (this page's validation aid) ------------------- */
+    function updateStatus(state, user) {
+      var dot = document.getElementById('status-dot');
+      var label = document.getElementById('status-label');
+      var message = document.getElementById('status-message');
+      var detail = document.getElementById('status-detail');
+      if (!dot || !label || !message) return;
+
+      dot.className = 'status-dot ' + state;
+
+      if (state === 'in') {
+        label.textContent = 'You’re signed in';
+        var who = user && (user.name || user.email);
+        message.textContent = who
+          ? 'Welcome back, ' + who + '. Use “Open app” above to jump back in.'
+          : 'You have an active session. Use “Open app” above to jump back in.';
+        if (detail) {
+          var lines = [];
+          if (user.name) lines.push('name:   ' + user.name);
+          if (user.email) lines.push('email:  ' + user.email);
+          if (user.orgs && user.orgs.length) lines.push('orgs:   ' + user.orgs.join(', '));
+          if (lines.length) { detail.textContent = lines.join('\n'); detail.hidden = false; }
+          else { detail.hidden = true; }
+        }
+      } else { // 'out'
+        label.textContent = 'You’re not signed in';
+        message.textContent = 'Use “Log in” above to sign in, or “Get Started Free” to create an account.';
+        if (detail) detail.hidden = true;
+      }
+    }
+
+    /* ---- go ---------------------------------------------------------- */
+    // Keep the static logged-out link in sync with CONFIG.LOGIN_URL.
+    var staticLogin = slot.querySelector('[data-auth-login]');
+    if (staticLogin) staticLogin.setAttribute('href', CONFIG.LOGIN_URL);
+
+    // Subtle "checking" affordance, added only now (no-JS users never see it).
+    slot.classList.add('is-checking');
+    slot.appendChild(el('span', { class: 'auth-spinner', role: 'status' }, [
+      el('span', { class: 'visually-hidden', text: 'Checking sign-in status' })
+    ]));
+
+    detectAuth().then(function (auth) {
+      if (auth) {
+        renderLoggedIn(auth.user);
+        updateStatus('in', auth.user);
+      } else {
+        renderLoggedOut();
+        updateStatus('out');
+      }
+    }).catch(function () {
+      renderLoggedOut();
+      updateStatus('out');
+    });
+  })();
+  </script>
+
+  <!-- 100% privacy-first analytics -->
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+</body>
+</html>
