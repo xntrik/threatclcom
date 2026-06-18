@@ -629,7 +629,7 @@ layout: null
         -->
         <div class="nav-cta">
           <div id="auth-slot" class="auth-slot" aria-live="polite">
-            <a href="https://beta.threatcl.com/login" class="btn btn-ghost" data-auth-login>Log in</a>
+            <a href="https://test.threatcl.com/login" class="btn btn-ghost" data-auth-login>Log in</a>
             <a href="/beta" class="btn btn-primary">Get Started Free</a>
           </div>
         </div>
@@ -657,7 +657,7 @@ layout: null
           This page detects your login state client-side by calling the app’s
           refresh endpoint with your existing session cookie. Your access token
           is held in memory for a single request and is never stored. Sign in or
-          out over at <code>beta.threatcl.com</code>, then reload this page to see
+          out over at <code>test.threatcl.com</code>, then reload this page to see
           the button update.
         </div>
       </div>
@@ -720,7 +720,7 @@ layout: null
 
      HOW IT WORKS
      ------------
-     threatcl.com is same-site with beta-api.threatcl.com, so the app's
+     threatcl.com is same-site with test-api.threatcl.com, so the app's
      HttpOnly + SameSite=Strict refresh cookie is sent on a credentialed
      fetch to the API. We POST /auth/refresh:
        - 200 + { access_token } => logged in  (then optionally GET /users/me)
@@ -734,8 +734,8 @@ layout: null
     'use strict';
 
     var CONFIG = {
-      API_BASE: 'https://beta-api.threatcl.com/api/v1',
-      APP_URL:  'https://beta.threatcl.com',
+      API_BASE: 'https://test-api.threatcl.com/api/v1',
+      APP_URL:  'https://test.threatcl.com',
       // Login path on the app. If this 404s, set to '' and let the app
       // route from its root.
       LOGIN_PATH: '/login',
