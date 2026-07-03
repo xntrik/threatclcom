@@ -578,9 +578,18 @@ layout: null
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
+
       /* Keep the auth slot visible on mobile — it's the whole point of
-         this page — but let the menu name collapse to just the avatar. */
+         this page — but make room for it: tighten nav padding, shrink the
+         logo, collapse the menu label to just the avatar, and drop the
+         redundant secondary CTA (the avatar menu already links to the app). */
+      .nav { padding: 0.5rem 1rem; }
+      .logo-mark { height: 44px; }
+      .logo-wordmark { height: 18px; margin-left: 0.6rem; }
+      .auth-slot { gap: 0.5rem; }
       .user-menu-name { display: none; }
+      .auth-hide-mobile { display: none; }
+
       .page-header h1 { font-size: 2rem; }
       .page-header p { font-size: 1rem; }
       .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -630,7 +639,7 @@ layout: null
         <div class="nav-cta">
           <div id="auth-slot" class="auth-slot" aria-live="polite">
             <a href="https://test.threatcl.com/login" class="btn btn-ghost" data-auth-login>Log in</a>
-            <a href="/beta" class="btn btn-primary">Get Started Free</a>
+            <a href="/beta" class="btn btn-primary auth-hide-mobile">Get Started Free</a>
           </div>
         </div>
       </div>
@@ -869,7 +878,7 @@ layout: null
       slot.appendChild(el('a', {
         href: CONFIG.LOGIN_URL, class: 'btn btn-ghost', 'data-auth-login': '', text: 'Log in'
       }));
-      slot.appendChild(el('a', { href: '/beta', class: 'btn btn-primary', text: 'Get Started Free' }));
+      slot.appendChild(el('a', { href: '/beta', class: 'btn btn-primary auth-hide-mobile', text: 'Get Started Free' }));
     }
 
     function renderLoggedIn(user) {
@@ -929,8 +938,9 @@ layout: null
 
       var menu = el('div', { class: 'user-menu' }, [ trigger, panel ]);
 
-      // Primary CTA stays alongside the menu for a one-click jump.
-      var openAppBtn = el('a', { href: CONFIG.APP_URL, class: 'btn btn-primary', text: 'Open app' });
+      // Primary CTA stays alongside the menu for a one-click jump on
+      // desktop; hidden on mobile where the menu itself links to the app.
+      var openAppBtn = el('a', { href: CONFIG.APP_URL, class: 'btn btn-primary auth-hide-mobile', text: 'Open app' });
 
       slot.appendChild(menu);
       slot.appendChild(openAppBtn);
